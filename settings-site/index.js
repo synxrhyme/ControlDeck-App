@@ -28,8 +28,8 @@ lang_select.addEventListener("change", () => {
 
     let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
 
-    if (temp_general_config[1] != "./assets/lang/" + selected_lang_name + ".lang") {
-        temp_general_config[1] = "./assets/lang/" + selected_lang_name + ".lang"
+    if (temp_general_config[1] != selected_lang_name) {
+        temp_general_config[1] = selected_lang_name
 
         fs.writeFileSync("./config.cfg", "")
 

@@ -1,22 +1,21 @@
 const { ipcMain, Menu, Tray, Notification, dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const fs = require("fs")
+const path = require('path')
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
-let lang_name = general_config[1]
+const configPath = path.resolve(__dirname, 'config');
+let lang_dir
+let lang_name
+let general_config
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
-let lang = lang_str.split(/\r?\n/)
-
-const options_errorbox = {
-    type: "error",
-    buttons: [lang[177]],
-    defaultId: 0,
-    title: lang[170],
-    message: lang[171],
-    detail: "Gib einen Namen an!",
-    modal: true
+if (fs.existsSync(configPath)) {
+    general_config = fs.readFileSync(configPath, "utf-8").split(/\r?\n/);
+    lang_name = general_config[1];
+    lang_dir = path.join(app.getAppPath(), "assets", "lang", lang_name);
 }
+
+let lang_str = fs.readFileSync(lang_dir, "utf-8")
+let lang = lang_str.split(/\r?\n/)
 
 let alwaysOnTop_array = general_config[2].split("=")
 let alwaysOnTop_str = alwaysOnTop_array[1]
