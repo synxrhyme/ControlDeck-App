@@ -1,0 +1,110 @@
+.inputs {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: start;
+}
+
+.alwaysontop-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#checkbox-always-on-top {
+    position: relative;
+    margin: 0;
+
+    left: 37%;
+    
+    height: 25px;
+    width: 25px;
+
+    z-index: 1003 !important;
+    
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-right: 15px;
+
+    height: 25px;
+    width: 25px;
+
+    border: var(--btn_border);
+    border-radius: 5px;
+    box-shadow: var(--btn_shadow);
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#checkbox-always-on-top:hover ~ .checkmark {
+    box-shadow: var(--btn_shadow_hover);
+}
+
+#checkbox-always-on-top:checked ~ .checkmark {
+    background: var(--btn_border_clr);
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    
+    left: 9px;
+    top: 5px;
+
+    width: 5px;
+    height: 10px;
+    
+    border: solid white;
+    border-width: 0 3px 3px 0;
+
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+
+    transition: 0.3s;
+}
+
+#checkbox-always-on-top:checked ~ .checkmark::after {
+    display: block;
+    transition: 0.3s;
+}
+
+.lang-div, .record-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#lang-select-span, #record-select-span {
+    margin-left: 15px;
+}
+
+.select {
+    border: var(--btn_border);
+    border-radius: 5px;
+
+    background: var(--btn_bg);
+    color: white;
+
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#back-button {
+    margin-top: 100px;
+}

@@ -1,0 +1,194 @@
+@font-face {
+    font-family: 'Space Grotesk Medium';
+    src: url(../webfonts/SpaceGrotesk-Medium.ttf);
+}
+
+@font-face {
+    font-family: 'Space Grotesk SemiBold';
+    src: url(../webfonts/SpaceGrotesk-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: 'Poppins Regular';
+    src: url(../webfonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Xirod Regular';
+    src: url(../webfonts/Xirod.otf);
+}
+
+@font-face {
+    font-family: 'Viper Squadron Regular';
+    src: url(../webfonts/viper_squadron.ttf);
+}
+
+@font-face {
+    font-family: 'Centauri Regular';
+    src: url(../webfonts/centauri.ttf);
+}
+
+* {
+    user-select: none;
+    z-index: 1001;
+}
+
+*:focus-visible {
+    outline: none !important;
+    border: 2px solid rgba(154, 205, 50, 0.6) !important;
+    box-shadow: var(--focus_outline_shadow) !important;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+:root {
+    --menu_bg: rgb(14, 14, 14);
+    
+    --menu_border: 2px solid rgb(40, 40, 40);
+    --menu_border_clr: rgb(40, 40, 40);
+
+    --focus_outline_shadow: 0 0 10px 0 rgba(154, 205, 50, 0.75);
+    
+    --btn_bg: rgb(19, 19, 19);
+    --btn_bg_mid: rgb(15, 15, 15, 0.9);
+    --btn_bg_dark: rgba(10, 10, 10, 0.8);
+
+    --btn_border: 2px solid rgb(35, 35, 35);
+    --btn_border_clr: rgb(35, 35, 35);
+    --btn_border_hover_clr:rgba(133, 192, 255, 0.1);;
+
+    --btn_shadow: 0 0 10px 0 rgba(133, 192, 255, 0.25);
+    --btn_shadow_clr: rgba(133, 192, 255, 0.25);
+    --btn_shadow_hover: 0 0 15px 3px rgba(133, 192, 255, 0.25);
+    --btn_shadow_hover_clr:rgba(133, 192, 255, 0.25);
+
+    --red: rgba(210, 0, 0, 0.9);
+    --red_dark: rgba(210, 0, 0, 0.6);
+    --red_shadow: 0 0 10px 0 rgba(210, 0, 0, 0.75);
+    --red_shadow_hover: 0 0 15px 3px rgba(210, 0, 0, 0.75);
+
+    --accent_clr: rgb(162, 0, 146);
+    --accent_clr: rgba(162, 0, 146, 0.9);
+    --accent_clr_shadow: 0 0 10px 0 rgb(162, 0, 146);
+    --accent_clr_shadow_hover: 0 0 15px 3px rgb(162, 0, 146);
+}
+
+html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+body { 
+    background: #000;
+    color: white;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+}
+
+#headline {
+    font-size: 400%;
+    font-weight: bolder;
+    font-family: 'Space Grotesk SemiBold';
+    background: linear-gradient(128.87deg, #6743aa, #5f139e);
+    
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.btn {
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-family: "Poppins Regular";
+    letter-spacing: 0.5px;
+
+    background: var(--btn_bg);
+
+    width: 80%;
+    height: 13%;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    border: var(--btn_border);
+    border-radius: 10px;
+
+    box-shadow: var(--btn_shadow);
+
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn:hover {
+    border: 2px solid var(--btn_shadow_hover_clr);
+    box-shadow: var(--btn_shadow_hover);
+
+    transition: 0.5s;
+}
+
+.back-btn {  
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    width: 100%;
+    height: 10%;
+    
+    border: var(--btn_border);
+    border-radius: 10px;
+
+    color: var(--red);
+    background: var(--btn_bg);
+
+    box-shadow: var(--red_shadow);
+
+    font-family: 'Space Grotesk SemiBold';
+    font-size: large;
+
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    border: 2px solid var(--red_dark);
+    box-shadow: var(--red_shadow_hover);
+}
+
+.back-btn-a {
+    margin-top: 40px;
+}
+
+.text {
+    color: white;
+    font-family: "Space Grotesk Medium";
+    font-size: 17px;
+}

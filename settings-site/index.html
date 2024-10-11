@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../assets/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="../assets/css/general.css" />
+    <link rel="stylesheet" href="../assets/css/loader.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title></title>
+  </head>
+
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    <div id="loader-section-left"></div>
+    <div id="loader-section-right"></div>
+  </div>
+  
+  <body>
+    <header>
+      <p id="headline"></p>
+    </header>
+
+    <main>
+      <div class="inputs">
+        <div class="alwaysontop-div">
+          <div class="checkmark-container">
+            <input type="checkbox" id="checkbox-always-on-top">
+            <span class="checkmark"></span>
+          </div>
+          <p class="text" id="toggle-span"></p>
+        </div>
+  
+        <div class="lang-div">
+          <select class="select" name="lang-select" id="lang-select">
+            <optgroup>
+              <option value="de">Deutsch</option>
+              <option value="en">English</option>
+            </optgroup>
+          </select>
+          <p class="text" id="lang-select-span"></p>
+        </div>
+
+        <div class="record-div">
+          <select class="select" name="record-select" id="record-select">
+            <optgroup>
+              <option value="record"></option>
+              <option value="dropdown"></option>
+            </optgroup>
+          </select>
+          <p class="text" id="record-select-span"></p>
+        </div>
+      </div>
+
+      <button class="back-btn" id="back-button">
+        <span id="back-span"></span>
+      </button>
+    </main>
+
+    <script src="./index.js"></script>
+    <script src="../renderer.js"></script>
+  </body>
+</html>

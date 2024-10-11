@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../assets/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="../assets/css/general.css" />
+    <link rel="stylesheet" href="../assets/css/loader.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title></title>
+  </head>
+
+  <body>    
+    <header>
+      <p id="headline"></p>
+    </header>
+
+    <main>
+      <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div id="loader-section-left"></div>
+        <div id="loader-section-right"></div>
+      </div>
+
+      <div class="menu" tabindex="-1">
+        <a class="button-a" href="../settings-site/index.html" draggable="false" tabindex="-1">
+          <button class="btn" id="settings">
+            <span id="settings-span"></span>
+          </button>
+        </a>
+        <a class="button-a" href="../config-site/index.html" draggable="false" tabindex="-1">
+          <button class="btn" id="configure">
+            <span id="configure-span"></span>
+          </button>
+        </a>
+        <a class="button-a" href="../copyright-site/index.html" draggable="false" tabindex="-1">
+          <button class="btn" id="copyright">
+            <span id="copyright-span"></span>
+          </button>
+        </a>
+
+        <button class="back-btn" class="back-btn-a" id="exit-btn" tabindex="-1">
+          <span id="exit-span"></span>
+        </button>
+      </div>
+    </main>
+
+    <script src="./index.js"></script>
+    <script src="../renderer.js"></script>
+  </body>
+</html>
