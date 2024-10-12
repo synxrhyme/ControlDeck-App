@@ -1,12 +1,17 @@
 const { ipcMain, Menu, Tray, Notification, dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const fs = require("fs")
+const path = require("path")
 
-let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+if (require('electron-squirrel-startup')) { app.quit() }
+
+const icon_path = path.join(__dirname, 'icon.ico')
+const assets_path = path.join(__dirname, "resources", "assets")
+const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
+
 let lang_name = general_config[1]
-
-let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
-let lang = lang_str.split(/\r?\n/)
+let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
+const lang = lang_str.split(/\r?\n/)
 
 let alwaysOnTop_array = general_config[2].split("=")
 let alwaysOnTop_str = alwaysOnTop_array[1]
@@ -24,7 +29,7 @@ const createWindow = () => {
         minHeight: 950,
         width: 1600,
         height: 1000,
-        icon: "./assets/icon.ico",
+        icon: icon_path,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -40,13 +45,14 @@ const createWindow = () => {
             modal: true,
             parent: win,
             show: false,
+            icon: icon_path,
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,
             }
         })
       
-        dialogWindow.loadFile("./dialog-window/index.html")
+        dialogWindow.loadFile(path.join(assets_path, "dialog-window", "index.html"))
 
         dialogWindow.once('ready-to-show', () => {
             dialogWindow.show()
@@ -82,7 +88,7 @@ const createWindow = () => {
             }
         })
       
-        errorBox.loadFile("./assets/" + type + "/index.html")
+        errorBox.loadFile(path.join(assets_path, type, "index.html"))
 
         errorBox.once('ready-to-show', () => {
             errorBox.show()
@@ -111,7 +117,7 @@ const createWindow = () => {
     })
 
     //win.removeMenu()
-    win.loadFile("./main-menu/index.html")
+    win.loadFile(path.join(__dirname, "main-menu", "index.html"))
 
     win.setAlwaysOnTop(alwaysOnTop, "screen")
 
@@ -123,7 +129,7 @@ const createWindow = () => {
     const from_tray = () => { win.show() }
     const close_app = () => { app.quit() }
 
-    tray = new Tray("./resources/app/assets/icon.ico")
+    tray = new Tray(icon_path)
     const contextMenu = Menu.buildFromTemplate([
         { label: "Minimize to tray", click: to_tray },
         { label: "Show Window", click: from_tray    },
@@ -182,7 +188,7 @@ const createWindow = () => {
         new Notification({
             title: lang[180],
             body: "",
-            icon: "./resources/app/assets/icon.ico",
+            icon: icon_path,
           }).show()
     })
 

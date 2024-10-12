@@ -1,405 +1,23 @@
 const fs = require("fs")
 const { SerialPort }  = require("serialport")
 const { ipcRenderer, dialog } = require('electron')
+const path = require("path")
+
 const ipc = ipcRenderer
+const assets_path = path.join(path.dirname(path.dirname(path.dirname(__dirname))), "resources", "assets")
+const btn_cfg_path = path.join(path.dirname(__dirname), "btn-config.cfg")
+const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
 
-let current_path = "./resources/app/config-site/button-1/"
-
-let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
-
-let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
-let lang = lang_str.split(/\r?\n/)
+let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
+const lang = lang_str.split(/\n?\r/)
 
 let firstTrigger = true
 
-let lang_32 =  lang[32] 
-let lang_33 =  lang[33] 
-let lang_34 =  lang[34] 
-let lang_35 =  lang[35] 
-let lang_36 =  lang[36] 
-let lang_37 =  lang[37] 
-let lang_38 =  lang[38] 
-let lang_39 =  lang[39] 
-let lang_40 =  lang[40] 
-let lang_41 =  lang[41] 
-let lang_42 =  lang[42] 
-let lang_43 =  lang[43] 
-let lang_44 =  lang[44] 
-let lang_45 =  lang[45] 
-let lang_46 =  lang[46] 
-let lang_47 =  lang[47] 
-let lang_48 =  lang[48] 
-let lang_49 =  lang[49] 
-let lang_50 =  lang[50] 
-let lang_51 =  lang[51] 
-let lang_52 =  lang[52] 
-let lang_53 =  lang[53] 
-let lang_54 =  lang[54] 
-let lang_55 =  lang[55] 
-let lang_56 =  lang[56] 
-let lang_57 =  lang[57] 
-let lang_58 =  lang[58] 
-let lang_60 =  lang[60] 
-let lang_61 =  lang[61] 
-let lang_62 =  lang[62] 
-let lang_63 =  lang[63] 
-let lang_64 =  lang[64] 
-let lang_65 =  lang[65] 
-let lang_66 =  lang[66] 
-let lang_67 =  lang[67] 
-let lang_68 =  lang[68] 
-let lang_59 =  lang[59] 
-let lang_80 =  lang[80] 
-let lang_81 =  lang[81] 
-let lang_82 =  lang[82] 
-let lang_83 =  lang[83] 
-let lang_84 =  lang[84] 
-let lang_85 =  lang[85] 
-let lang_86 =  lang[86] 
-let lang_87 =  lang[87] 
-let lang_88 =  lang[88] 
-let lang_89 =  lang[89] 
-let lang_90 =  lang[90] 
-let lang_91 =  lang[91] 
-let lang_92 =  lang[92] 
-let lang_93 =  lang[93] 
-let lang_94 =  lang[94] 
-let lang_95 =  lang[95] 
-let lang_96 =  lang[96] 
-let lang_97 =  lang[97] 
-let lang_98 =  lang[98] 
-let lang_99 =  lang[99] 
-let lang_100 = lang[100]
-let lang_101 = lang[101]
-let lang_102 = lang[102]
-let lang_103 = lang[103]
-let lang_104 = lang[104]
-let lang_105 = lang[105]
-let lang_106 = lang[106]
-let lang_107 = lang[107]
-let lang_108 = lang[108]
-let lang_109 = lang[109]
-let lang_110 = lang[110]
-let lang_111 = lang[111]
-let lang_112 = lang[112]
-let lang_113 = lang[113]
-let lang_114 = lang[114]
-let lang_115 = lang[115]
-let lang_116 = lang[116]
-let lang_117 = lang[117]
-let lang_118 = lang[118]
-let lang_119 = lang[119]
-let lang_120 = lang[120]
-let lang_121 = lang[121]
-let lang_122 = lang[122]
-let lang_123 = lang[123]
-let lang_124 = lang[124]
-let lang_125 = lang[125]
-let lang_126 = lang[126]
-let lang_127 = lang[127]
-let lang_128 = lang[128]
-let lang_129 = lang[129]
-let lang_130 = lang[130]
-let lang_131 = lang[131]
-let lang_132 = lang[132]
-let lang_133 = lang[133]
-let lang_134 = lang[134]
-let lang_135 = lang[135]
-let lang_136 = lang[136]
-let lang_137 = lang[137]
-let lang_138 = lang[138]
-let lang_139 = lang[139]
-let lang_140 = lang[140]
-let lang_141 = lang[141]
-let lang_142 = lang[142]
-let lang_143 = lang[143]
-let lang_144 = lang[144]
-let lang_145 = lang[145]
-let lang_146 = lang[146]
-let lang_147 = lang[147]
-let lang_148 = lang[148]
-let lang_149 = lang[149]
-let lang_150 = lang[150]
-let lang_151 = lang[151]
-let lang_152 = lang[152]
-let lang_153 = lang[153]
-let lang_154 = lang[154]
-let lang_155 = lang[155]
-let lang_156 = lang[156]
-let lang_157 = lang[157]
-let lang_158 = lang[158]
-let lang_159 = lang[159]
-let lang_160 = lang[160]
-let lang_161 = lang[161]
-let lang_162 = lang[162]
-let lang_163 = lang[163]
-let lang_164 = lang[164]
-let lang_165 = lang[165]
-let lang_166 = lang[166]
-let lang_167 = lang[167]
-let lang_168 = lang[168]
-let lang_169 = lang[169]
+const lang_32 = lang[32]; const lang_33 = lang[33]; const lang_34 = lang[34]; const lang_35 = lang[35]; const lang_36 = lang[36]; const lang_37 = lang[37]; const lang_38 = lang[38]; const lang_39 = lang[39]; const lang_40 = lang[40]; const lang_41 = lang[41]; const lang_42 = lang[42]; const lang_43 = lang[43]; const lang_44 = lang[44]; const lang_45 = lang[45]; const lang_46 = lang[46]; const lang_47 = lang[47]; const lang_48 = lang[48]; const lang_49 = lang[49]; const lang_50 = lang[50]; const lang_51 = lang[51]; const lang_52 = lang[52]; const lang_53 = lang[53]; const lang_54 = lang[54]; const lang_55 = lang[55]; const lang_56 = lang[56]; const lang_57 = lang[57]; const lang_58 = lang[58]; const lang_60 = lang[60]; const lang_61 = lang[61]; const lang_62 = lang[62]; const lang_63 = lang[63]; const lang_64 = lang[64]; const lang_65 = lang[65]; const lang_66 = lang[66]; const lang_67 = lang[67]; const lang_68 = lang[68]; const lang_59 = lang[59]; const lang_80 = lang[80]; const lang_81 = lang[81]; const lang_82 = lang[82]; const lang_83 = lang[83]; const lang_84 = lang[84]; const lang_85 = lang[85]; const lang_86 = lang[86]; const lang_87 = lang[87]; const lang_88 = lang[88]; const lang_89 = lang[89]; const lang_90 = lang[90]; const lang_91 = lang[91]; const lang_92 = lang[92]; const lang_93 = lang[93]; const lang_94 = lang[94]; const lang_95 = lang[95]; const lang_96 = lang[96]; const lang_97 = lang[97]; const lang_98 = lang[98]; const lang_99 = lang[99]; const lang_100 = lang[100]; const lang_101 = lang[101]; const lang_102 = lang[102]; const lang_103 = lang[103]; const lang_104 = lang[104]; const lang_105 = lang[105]; const lang_106 = lang[106]; const lang_107 = lang[107]; const lang_108 = lang[108]; const lang_109 = lang[109]; const lang_110 = lang[110]; const lang_111 = lang[111]; const lang_112 = lang[112]; const lang_113 = lang[113]; const lang_114 = lang[114]; const lang_115 = lang[115]; const lang_116 = lang[116]; const lang_117 = lang[117]; const lang_118 = lang[118]; const lang_119 = lang[119]; const lang_120 = lang[120]; const lang_121 = lang[121]; const lang_122 = lang[122]; const lang_123 = lang[123]; const lang_124 = lang[124]; const lang_125 = lang[125]; const lang_126 = lang[126]; const lang_127 = lang[127]; const lang_128 = lang[128]; const lang_129 = lang[129]; const lang_130 = lang[130]; const lang_131 = lang[131]; const lang_132 = lang[132]; const lang_133 = lang[133]; const lang_134 = lang[134]; const lang_135 = lang[135]; const lang_136 = lang[136]; const lang_137 = lang[137]; const lang_138 = lang[138]; const lang_139 = lang[139]; const lang_140 = lang[140]; const lang_141 = lang[141]; const lang_142 = lang[142]; const lang_143 = lang[143]; const lang_144 = lang[144]; const lang_145 = lang[145]; const lang_146 = lang[146]; const lang_147 = lang[147]; const lang_148 = lang[148]; const lang_149 = lang[149]; const lang_150 = lang[150]; const lang_151 = lang[151]; const lang_152 = lang[152]; const lang_153 = lang[153]; const lang_154 = lang[154]; const lang_155 = lang[155]; const lang_156 = lang[156]; const lang_157 = lang[157]; const lang_158 = lang[158]; const lang_159 = lang[159]; const lang_160 = lang[160]; const lang_161 = lang[161]; const lang_162 = lang[162]; const lang_163 = lang[163]; const lang_164 = lang[164]; const lang_165 = lang[165]; const lang_166 = lang[166]; const lang_167 = lang[167]; const lang_168 = lang[168]; const lang_169 = lang[169]
 
-const conversion_hid_code_lang = {
-    0x00: [lang_32],
-    0x04: [lang_33],
-    0x05: [lang_34],
-    0x06: [lang_35],
-    0x07: [lang_36],
-    0x08: [lang_37],
-    0x09: [lang_38],
-    0x0A: [lang_39],
-    0x0B: [lang_40],
-    0x0C: [lang_41],
-    0x0D: [lang_42],
-    0x0E: [lang_43],
-    0x0F: [lang_44],
-    0x10: [lang_45],
-    0x11: [lang_46],
-    0x12: [lang_47],
-    0x13: [lang_48],
-    0x14: [lang_49],
-    0x15: [lang_50],
-    0x16: [lang_51],
-    0x17: [lang_52],
-    0x18: [lang_53],
-    0x19: [lang_54],
-    0x1A: [lang_55],
-    0x1B: [lang_56],
-    0x1C: [lang_57],
-    0x1D: [lang_58],
-    0x1E: [lang_60],
-    0x1F: [lang_61],
-    0x20: [lang_62],
-    0x21: [lang_63],
-    0x22: [lang_64],
-    0x23: [lang_65],
-    0x24: [lang_66],
-    0x25: [lang_67],
-    0x26: [lang_68],
-    0x27: [lang_59],
-    0x28: [lang_80],
-    0x29: [lang_81],
-    0x2A: [lang_82],
-    0x2B: [lang_83],
-    0x2C: [lang_84],
-    0x2D: [lang_85],
-    0x2E: [lang_86],
-    0x2F: [lang_87],
-    0x30: [lang_88],
-    0x31: [lang_89],
-    0x33: [lang_90],
-    0x34: [lang_91],
-    0x35: [lang_92],
-    0x36: [lang_93],
-    0x37: [lang_94],
-    0x39: [lang_95],
-    0x3A: [lang_96],
-    0x3B: [lang_97],
-    0x3C: [lang_98],
-    0x3D: [lang_99],
-    0x3E: [lang_100],
-    0x3F: [lang_101],
-    0x40: [lang_102],
-    0x41: [lang_103],
-    0x42: [lang_104],
-    0x43: [lang_105], 
-    0x44: [lang_106], 
-    0x45: [lang_107], 
-    0x46: [lang_108],
-    0x47: [lang_109],
-    0x48: [lang_110],
-    0x49: [lang_111],
-    0x4A: [lang_112],
-    0x4B: [lang_113],
-    0x4C: [lang_114],
-    0x4D: [lang_115],
-    0x4E: [lang_116],
-    0x4F: [lang_117],
-    0x50: [lang_118],
-    0x51: [lang_119],
-    0x52: [lang_120],
-    0x53: [lang_121],
-    0x54: [lang_122],
-    0x55: [lang_123],
-    0x56: [lang_124],
-    0x57: [lang_125],
-    0x58: [lang_126],
-    0x59: [lang_127],
-    0x5A: [lang_128],
-    0x5B: [lang_129],
-    0x5C: [lang_130],
-    0x5D: [lang_131],
-    0x5E: [lang_132],
-    0x5F: [lang_133],
-    0x60: [lang_134],
-    0x61: [lang_135],
-    0x62: [lang_136],
-    0x4D: [lang_137],
-    0x52: [lang_138],
-    0x4E: [lang_139],
-    0x50: [lang_140],
-    0x4F: [lang_141],
-    0x4A: [lang_142],
-    0x51: [lang_143],
-    0x4B: [lang_144],
-    0x49: [lang_145],
-    0x63: [lang_146],
-    0x64: [lang_147],
-    0x64: [lang_148],
-    0x67: [lang_149],
-    0x68: [lang_150],
-    0x69: [lang_151],
-    0x6A: [lang_152],
-    0x6B: [lang_153],
-    0x6C: [lang_154],
-    0x6D: [lang_155],
-    0x6E: [lang_156],
-    0x6F: [lang_157],
-    0x70: [lang_158],
-    0x71: [lang_159],
-    0x72: [lang_160],
-    0x73: [lang_161],
-    0xE0: [lang_162],
-    0xE1: [lang_163],
-    0xE2: [lang_164],
-    0xE3: [lang_165],
-    0xE4: [lang_166],
-    0xE5: [lang_167],
-    0xE6: [lang_168],
-    0xE7: [lang_169],
-}
-
-const conversion_code_hid_lang = {
-    [lang_32]: 0x00,
-    [lang_33]: 0x04,
-    [lang_34]: 0x05,
-    [lang_35]: 0x06,
-    [lang_36]: 0x07,
-    [lang_37]: 0x08,
-    [lang_38]: 0x09,
-    [lang_39]: 0x0A,
-    [lang_40]: 0x0B,
-    [lang_41]: 0x0C,
-    [lang_42]: 0x0D,
-    [lang_43]: 0x0E,
-    [lang_44]: 0x0F,
-    [lang_45]: 0x10,
-    [lang_46]: 0x11,
-    [lang_47]: 0x12,
-    [lang_48]: 0x13,
-    [lang_49]: 0x14,
-    [lang_50]: 0x15,
-    [lang_51]: 0x16,
-    [lang_52]: 0x17,
-    [lang_53]: 0x18,
-    [lang_54]: 0x19,
-    [lang_55]: 0x1A,
-    [lang_56]: 0x1B,
-    [lang_57]: 0x1C,
-    [lang_58]: 0x1D,
-    [lang_60]: 0x1E,
-    [lang_61]: 0x1F,
-    [lang_62]: 0x20,
-    [lang_63]: 0x21,
-    [lang_64]: 0x22,
-    [lang_65]: 0x23,
-    [lang_66]: 0x24,
-    [lang_67]: 0x25,
-    [lang_68]: 0x26,
-    [lang_59]: 0x27,
-    [lang_80]: 0x28,
-    [lang_81]: 0x29,
-    [lang_82]: 0x2A,
-    [lang_83]: 0x2B,
-    [lang_84]: 0x2C,
-    [lang_85]: 0x2D,
-    [lang_86]: 0x2E,
-    [lang_87]: 0x2F,
-    [lang_88]: 0x30,
-    [lang_89]: 0x31,
-    [lang_90]: 0x33,
-    [lang_91]: 0x34,
-    [lang_92]: 0x35,
-    [lang_93]: 0x36,
-    [lang_94]: 0x37,
-    [lang_95]: 0x39,
-    [lang_96]: 0x3A,
-    [lang_97]: 0x3B,
-    [lang_98]: 0x3C,
-    [lang_99]: 0x3D,
-    [lang_100]: 0x3E,
-    [lang_101]: 0x3F,
-    [lang_102]: 0x40,
-    [lang_103]: 0x41,
-    [lang_104]: 0x42,
-    [lang_105]: 0x43, 
-    [lang_106]: 0x44, 
-    [lang_107]: 0x45, 
-    [lang_108]: 0x46,
-    [lang_109]: 0x47,
-    [lang_110]: 0x48,
-    [lang_111]: 0x49,
-    [lang_112]: 0x4A,
-    [lang_113]: 0x4B,
-    [lang_114]: 0x4C,
-    [lang_115]: 0x4D,
-    [lang_116]: 0x4E,
-    [lang_117]: 0x4F,
-    [lang_118]: 0x50,
-    [lang_119]: 0x51,
-    [lang_120]: 0x52,
-    [lang_121]: 0x53,
-    [lang_122]: 0x54,
-    [lang_123]: 0x55,
-    [lang_124]: 0x56,
-    [lang_125]: 0x57,
-    [lang_126]: 0x58,
-    [lang_127]: 0x59,
-    [lang_128]: 0x5A,
-    [lang_129]: 0x5B,
-    [lang_130]: 0x5C,
-    [lang_131]: 0x5D,
-    [lang_132]: 0x5E,
-    [lang_133]: 0x5F,
-    [lang_134]: 0x60,
-    [lang_135]: 0x61,
-    [lang_136]: 0x62,
-    [lang_137]: 0x4D,
-    [lang_138]: 0x52,
-    [lang_139]: 0x4E,
-    [lang_140]: 0x50,
-    [lang_141]: 0x4F,
-    [lang_142]: 0x4A,
-    [lang_143]: 0x51,
-    [lang_144]: 0x4B,
-    [lang_145]: 0x49,
-    [lang_146]: 0x63,
-    [lang_147]: 0x64,
-    [lang_148]: 0x64,
-    [lang_149]: 0x67,
-    [lang_150]: 0x68,
-    [lang_151]: 0x69,
-    [lang_152]: 0x6A,
-    [lang_153]: 0x6B,
-    [lang_154]: 0x6C,
-    [lang_155]: 0x6D,
-    [lang_156]: 0x6E,
-    [lang_157]: 0x6F,
-    [lang_158]: 0x70,
-    [lang_159]: 0x71,
-    [lang_160]: 0x72,
-    [lang_161]: 0x73,
-    [lang_162]: 0xE0,
-    [lang_163]: 0xE1,
-    [lang_164]: 0xE2,
-    [lang_165]: 0xE3,
-    [lang_166]: 0xE4,
-    [lang_167]: 0xE5,
-    [lang_168]: 0xE6,
-    [lang_169]: 0xE7,
-}
+const conversion_hid_code_lang = { 0x00: [lang_32], 0x04: [lang_33], 0x05: [lang_34], 0x06: [lang_35], 0x07: [lang_36], 0x08: [lang_37], 0x09: [lang_38], 0x0A: [lang_39], 0x0B: [lang_40], 0x0C: [lang_41], 0x0D: [lang_42], 0x0E: [lang_43], 0x0F: [lang_44], 0x10: [lang_45], 0x11: [lang_46], 0x12: [lang_47], 0x13: [lang_48], 0x14: [lang_49], 0x15: [lang_50], 0x16: [lang_51], 0x17: [lang_52], 0x18: [lang_53], 0x19: [lang_54], 0x1A: [lang_55], 0x1B: [lang_56], 0x1C: [lang_57], 0x1D: [lang_58], 0x1E: [lang_60], 0x1F: [lang_61], 0x20: [lang_62], 0x21: [lang_63], 0x22: [lang_64], 0x23: [lang_65], 0x24: [lang_66], 0x25: [lang_67], 0x26: [lang_68], 0x27: [lang_59], 0x28: [lang_80], 0x29: [lang_81], 0x2A: [lang_82], 0x2B: [lang_83], 0x2C: [lang_84], 0x2D: [lang_85], 0x2E: [lang_86], 0x2F: [lang_87], 0x30: [lang_88], 0x31: [lang_89], 0x33: [lang_90], 0x34: [lang_91], 0x35: [lang_92], 0x36: [lang_93], 0x37: [lang_94], 0x39: [lang_95], 0x3A: [lang_96], 0x3B: [lang_97], 0x3C: [lang_98], 0x3D: [lang_99], 0x3E: [lang_100], 0x3F: [lang_101], 0x40: [lang_102], 0x41: [lang_103], 0x42: [lang_104], 0x43: [lang_105],  0x44: [lang_106],  0x45: [lang_107],  0x46: [lang_108], 0x47: [lang_109], 0x48: [lang_110], 0x49: [lang_111], 0x4A: [lang_112], 0x4B: [lang_113], 0x4C: [lang_114], 0x4D: [lang_115], 0x4E: [lang_116], 0x4F: [lang_117], 0x50: [lang_118], 0x51: [lang_119], 0x52: [lang_120], 0x53: [lang_121], 0x54: [lang_122], 0x55: [lang_123], 0x56: [lang_124], 0x57: [lang_125], 0x58: [lang_126], 0x59: [lang_127], 0x5A: [lang_128], 0x5B: [lang_129], 0x5C: [lang_130], 0x5D: [lang_131], 0x5E: [lang_132], 0x5F: [lang_133], 0x60: [lang_134], 0x61: [lang_135], 0x62: [lang_136], 0x4D: [lang_137], 0x52: [lang_138], 0x4E: [lang_139], 0x50: [lang_140], 0x4F: [lang_141], 0x4A: [lang_142], 0x51: [lang_143], 0x4B: [lang_144], 0x49: [lang_145], 0x63: [lang_146], 0x64: [lang_147], 0x64: [lang_148], 0x67: [lang_149], 0x68: [lang_150], 0x69: [lang_151], 0x6A: [lang_152], 0x6B: [lang_153], 0x6C: [lang_154], 0x6D: [lang_155], 0x6E: [lang_156], 0x6F: [lang_157], 0x70: [lang_158], 0x71: [lang_159], 0x72: [lang_160], 0x73: [lang_161], 0xE0: [lang_162], 0xE1: [lang_163], 0xE2: [lang_164], 0xE3: [lang_165], 0xE4: [lang_166], 0xE5: [lang_167], 0xE6: [lang_168], 0xE7: [lang_169] }
+const conversion_code_hid_lang = { [lang_32]: 0x00, [lang_33]: 0x04, [lang_34]: 0x05, [lang_35]: 0x06, [lang_36]: 0x07, [lang_37]: 0x08, [lang_38]: 0x09, [lang_39]: 0x0A, [lang_40]: 0x0B, [lang_41]: 0x0C, [lang_42]: 0x0D, [lang_43]: 0x0E, [lang_44]: 0x0F, [lang_45]: 0x10, [lang_46]: 0x11, [lang_47]: 0x12, [lang_48]: 0x13, [lang_49]: 0x14, [lang_50]: 0x15, [lang_51]: 0x16, [lang_52]: 0x17, [lang_53]: 0x18, [lang_54]: 0x19, [lang_55]: 0x1A, [lang_56]: 0x1B, [lang_57]: 0x1C, [lang_58]: 0x1D, [lang_60]: 0x1E, [lang_61]: 0x1F, [lang_62]: 0x20, [lang_63]: 0x21, [lang_64]: 0x22, [lang_65]: 0x23, [lang_66]: 0x24, [lang_67]: 0x25, [lang_68]: 0x26, [lang_59]: 0x27, [lang_80]: 0x28, [lang_81]: 0x29, [lang_82]: 0x2A, [lang_83]: 0x2B, [lang_84]: 0x2C, [lang_85]: 0x2D, [lang_86]: 0x2E, [lang_87]: 0x2F, [lang_88]: 0x30, [lang_89]: 0x31, [lang_90]: 0x33, [lang_91]: 0x34, [lang_92]: 0x35, [lang_93]: 0x36, [lang_94]: 0x37, [lang_95]: 0x39, [lang_96]: 0x3A, [lang_97]: 0x3B, [lang_98]: 0x3C, [lang_99]: 0x3D, [lang_100]: 0x3E, [lang_101]: 0x3F, [lang_102]: 0x40, [lang_103]: 0x41, [lang_104]: 0x42, [lang_105]: 0x43,  [lang_106]: 0x44,  [lang_107]: 0x45,  [lang_108]: 0x46, [lang_109]: 0x47, [lang_110]: 0x48, [lang_111]: 0x49, [lang_112]: 0x4A, [lang_113]: 0x4B, [lang_114]: 0x4C, [lang_115]: 0x4D, [lang_116]: 0x4E, [lang_117]: 0x4F, [lang_118]: 0x50, [lang_119]: 0x51, [lang_120]: 0x52, [lang_121]: 0x53, [lang_122]: 0x54, [lang_123]: 0x55, [lang_124]: 0x56, [lang_125]: 0x57, [lang_126]: 0x58, [lang_127]: 0x59, [lang_128]: 0x5A, [lang_129]: 0x5B, [lang_130]: 0x5C, [lang_131]: 0x5D, [lang_132]: 0x5E, [lang_133]: 0x5F, [lang_134]: 0x60, [lang_135]: 0x61, [lang_136]: 0x62, [lang_137]: 0x4D, [lang_138]: 0x52, [lang_139]: 0x4E, [lang_140]: 0x50, [lang_141]: 0x4F, [lang_142]: 0x4A, [lang_143]: 0x51, [lang_144]: 0x4B, [lang_145]: 0x49, [lang_146]: 0x63, [lang_147]: 0x64, [lang_148]: 0x64, [lang_149]: 0x67, [lang_150]: 0x68, [lang_151]: 0x69, [lang_152]: 0x6A, [lang_153]: 0x6B, [lang_154]: 0x6C, [lang_155]: 0x6D, [lang_156]: 0x6E, [lang_157]: 0x6F, [lang_158]: 0x70, [lang_159]: 0x71, [lang_160]: 0x72, [lang_161]: 0x73, [lang_162]: 0xE0, [lang_163]: 0xE1, [lang_164]: 0xE2, [lang_165]: 0xE3, [lang_166]: 0xE4, [lang_167]: 0xE5, [lang_168]: 0xE6, [lang_169]: 0xE7 }
 
 ipc.on("dialog-apply", (event, arg) => {
     apply()
@@ -736,10 +354,10 @@ function apply() {
             
             for (var i = 0; i < config.length; i++) {
                 if (i == config.length - 1) {
-                    fs.appendFileSync(current_path + "config.cfg", config[i].toString())
+                    fs.appendFileSync(path.join(assets_path, "config.cfg"), config[i].toString())
                 }
                 else {
-                    fs.appendFileSync(current_path + "config.cfg", config[i].toString() + "\n")
+                    fs.appendFileSync(path.join(assets_path, "config.cfg"), config[i].toString() + "\n")
                 }
             }
 
@@ -844,18 +462,18 @@ async function checkPorts() {
                 if (fn_port.serialNumber == port_serialNumber && !currently_connected) {
                     port = fn_port.path
 
-                    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+                    let temp_general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
 
                     if (temp_general_config[0] != port) {
                         temp_config_save[0] = port
-                        fs.writeFileSync("./resources/app/assets/config.cfg", "")
+                        fs.writeFileSync(path.join(assets_path, "config.cfg"), "")
 
                         for (let i = 0; i < temp_general_config.length; i++) {
                             if (i != temp_general_config.length - 1) {
-                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
+                                fs.appendFileSync(path.join(assets_path, "config.cfg"), temp_general_config[i] + "\n")
                             }
                             else {
-                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
+                                fs.appendFileSync(path.join(assets_path, "config.cfg"), temp_general_config[i])
                             }
                         }
                     }        
@@ -868,7 +486,7 @@ async function checkPorts() {
 }
 
 function update_values() {
-    btn_cfg = fs.readFileSync(current_path + "config.cfg", "utf-8")
+    btn_cfg = fs.readFileSync(btn_cfg_path, "utf-8")
     btn_cfg_array = btn_cfg.split(/\r?\n/)
 
     name_input.value = btn_cfg_array[0]

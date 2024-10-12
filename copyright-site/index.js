@@ -1,10 +1,12 @@
 const fs = require("fs")
+const path = require("path")
 
-let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+const assets_path = path.join(path.dirname(__dirname), "resources", "assets")
+const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
+
 let lang_name = general_config[1]
-
-let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
-let lang = lang_str.split(/\n?\r/)
+let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
+const lang = lang_str.split(/\n?\r/)
 
 let headline = document.getElementById("headline")
 
