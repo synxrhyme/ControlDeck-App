@@ -39,5 +39,27 @@
     "node-gyp": "^10.1.0",
     "path": "^0.12.7",
     "serialport": "^12.0.0"
+  },
+  "config": {
+    "forge": {
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        },
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "ControlDeck-App"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-deb"
+        },
+        {
+          "name": "@electron-forge/maker-rpm"
+        }
+      ],
+      "publishers": []
+    }
   }
 }

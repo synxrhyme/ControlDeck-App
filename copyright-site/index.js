@@ -1,9 +1,9 @@
 const fs = require("fs")
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\n?\r/)
 
 let headline = document.getElementById("headline")

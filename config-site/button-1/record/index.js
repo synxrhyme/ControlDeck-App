@@ -3,10 +3,12 @@ const { SerialPort }  = require("serialport")
 const { ipcRenderer, dialog } = require('electron')
 const ipc = ipcRenderer
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+let current_path = "./resources/app/config-site/button-1/"
+
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\r?\n/)
 
 let firstTrigger = true
@@ -449,8 +451,6 @@ status_log.innerHTML = ""
 status_log.style.color = "rgb(255, 230, 0)"
 status_log.innerHTML = lang[9]
 
-let current_path = "./config-site/button-1/"
-
 let keysPressed = []
 
 let serialPort
@@ -535,8 +535,11 @@ document.getElementById("back-button").addEventListener("click", () => {
             ipc.send("nameIncomplete")
         }
     }
-    else {
+    else if (!currently_connected && changed_values){
         ipc.send("controldeckNotConnected")
+    }
+    else {
+        window.location.href = "../../index.html"
     }
 })
 
@@ -841,18 +844,18 @@ async function checkPorts() {
                 if (fn_port.serialNumber == port_serialNumber && !currently_connected) {
                     port = fn_port.path
 
-                    let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+                    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 
                     if (temp_general_config[0] != port) {
                         temp_config_save[0] = port
-                        fs.writeFileSync("./config.cfg", "")
+                        fs.writeFileSync("./resources/app/assets/config.cfg", "")
 
                         for (let i = 0; i < temp_general_config.length; i++) {
                             if (i != temp_general_config.length - 1) {
-                                fs.appendFileSync("./config.cfg", temp_general_config[i] + "\n")
+                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
                             }
                             else {
-                                fs.appendFileSync("./config.cfg", temp_general_config[i])
+                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
                             }
                         }
                     }        

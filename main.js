@@ -1,20 +1,11 @@
 const { ipcMain, Menu, Tray, Notification, dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const fs = require("fs")
-const path = require('path')
 
-const configPath = path.resolve(__dirname, 'config');
-let lang_dir
-let lang_name
-let general_config
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+let lang_name = general_config[1]
 
-if (fs.existsSync(configPath)) {
-    general_config = fs.readFileSync(configPath, "utf-8").split(/\r?\n/);
-    lang_name = general_config[1];
-    lang_dir = path.join(app.getAppPath(), "assets", "lang", lang_name);
-}
-
-let lang_str = fs.readFileSync(lang_dir, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\r?\n/)
 
 let alwaysOnTop_array = general_config[2].split("=")
@@ -55,7 +46,7 @@ const createWindow = () => {
             }
         })
       
-        dialogWindow.loadFile("./assets/dialog-window/index.html")
+        dialogWindow.loadFile("./dialog-window/index.html")
 
         dialogWindow.once('ready-to-show', () => {
             dialogWindow.show()
@@ -119,7 +110,7 @@ const createWindow = () => {
         }
     })
 
-    //win.removeMenu() //remove electron bar
+    //win.removeMenu()
     win.loadFile("./main-menu/index.html")
 
     win.setAlwaysOnTop(alwaysOnTop, "screen")
@@ -132,7 +123,7 @@ const createWindow = () => {
     const from_tray = () => { win.show() }
     const close_app = () => { app.quit() }
 
-    tray = new Tray("./assets/icon.ico")
+    tray = new Tray("./resources/app/assets/icon.ico")
     const contextMenu = Menu.buildFromTemplate([
         { label: "Minimize to tray", click: to_tray },
         { label: "Show Window", click: from_tray    },
@@ -191,7 +182,7 @@ const createWindow = () => {
         new Notification({
             title: lang[180],
             body: "",
-            icon: "./assets/icon.ico",
+            icon: "./resources/app/assets/icon.ico",
           }).show()
     })
 

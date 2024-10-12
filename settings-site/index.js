@@ -2,10 +2,10 @@ const fs = require("fs")
 const { ipcRenderer } = require('electron')
 ipc = ipcRenderer
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\r?\n/)
 
 let headline = document.getElementById("headline")
@@ -26,19 +26,19 @@ let lang_select = document.getElementById("lang-select")
 lang_select.addEventListener("change", () => {
     selected_lang_name = lang_select.value
 
-    let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 
     if (temp_general_config[1] != selected_lang_name) {
         temp_general_config[1] = selected_lang_name
 
-        fs.writeFileSync("./config.cfg", "")
+        fs.writeFileSync("./resources/app/assets/config.cfg", "")
 
         for (let i = 0; i < temp_general_config.length; i++) {
             if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./config.cfg", temp_general_config[i] + "\n")
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
             }
             else {
-                fs.appendFileSync("./config.cfg", temp_general_config[i])
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
             }
         }
 
@@ -49,19 +49,19 @@ lang_select.addEventListener("change", () => {
 record_select.addEventListener("change", () => {
     let record_select_val = record_select.value
 
-    let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 
     if (temp_general_config[3] != record_select_val) {
         temp_general_config[3] = record_select_val
 
-        fs.writeFileSync("./config.cfg", "")
+        fs.writeFileSync("./resources/app/assets/config.cfg", "")
 
         for (let i = 0; i < temp_general_config.length; i++) {
             if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./config.cfg", temp_general_config[i] + "\n")
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
             }
             else {
-                fs.appendFileSync("./config.cfg", temp_general_config[i])
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
             }
         }
     }
@@ -81,19 +81,19 @@ back_span.innerHTML = lang[6]
 document.getElementById("checkbox-always-on-top").addEventListener("click", () => {
     ipc.send("alwaysOnTop")
 
-    let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 
     if (temp_general_config[2] != "ontop=" + AoT_checkbox.checked.toString()) {
         temp_general_config[2] = "ontop=" + AoT_checkbox.checked.toString()
 
-        fs.writeFileSync("./config.cfg", "")
+        fs.writeFileSync("./resources/app/assets/config.cfg", "")
 
         for (let i = 0; i < temp_general_config.length; i++) {
             if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./config.cfg", temp_general_config[i] + "\n")
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
             }
             else {
-                fs.appendFileSync("./config.cfg", temp_general_config[i])
+                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
             }
         }
     }

@@ -2,10 +2,10 @@ const fs = require('fs')
 const { SerialPort }  = require('serialport')
 const { ipcRenderer } = require("electron")
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\r?\n/)
 
 let headline = document.getElementById("headline")
@@ -273,14 +273,14 @@ function update_values() {
     })
     */
 
-    btn1_cfg = fs.readFileSync("./config-site/button-1/config.cfg", "utf-8")
-    btn2_cfg = fs.readFileSync("./config-site/button-2/config.cfg", "utf-8")
-    btn3_cfg = fs.readFileSync("./config-site/button-3/config.cfg", "utf-8")
-    btn4_cfg = fs.readFileSync("./config-site/button-4/config.cfg", "utf-8")
-    btn5_cfg = fs.readFileSync("./config-site/button-5/config.cfg", "utf-8")
-    btn6_cfg = fs.readFileSync("./config-site/button-6/config.cfg", "utf-8")
-    btn7_cfg = fs.readFileSync("./config-site/button-7/config.cfg", "utf-8")
-    btn8_cfg = fs.readFileSync("./config-site/button-8/config.cfg", "utf-8")
+    btn1_cfg = fs.readFileSync("./resources/app/config-site/button-1/config.cfg", "utf-8")
+    btn2_cfg = fs.readFileSync("./resources/app/config-site/button-2/config.cfg", "utf-8")
+    btn3_cfg = fs.readFileSync("./resources/app/config-site/button-3/config.cfg", "utf-8")
+    btn4_cfg = fs.readFileSync("./resources/app/config-site/button-4/config.cfg", "utf-8")
+    btn5_cfg = fs.readFileSync("./resources/app/config-site/button-5/config.cfg", "utf-8")
+    btn6_cfg = fs.readFileSync("./resources/app/config-site/button-6/config.cfg", "utf-8")
+    btn7_cfg = fs.readFileSync("./resources/app/config-site/button-7/config.cfg", "utf-8")
+    btn8_cfg = fs.readFileSync("./resources/app/config-site/button-8/config.cfg", "utf-8")
 
     btn1_cfg_array = btn1_cfg.split(/\r?\n/)
     btn2_cfg_array = btn2_cfg.split(/\r?\n/)
@@ -433,140 +433,140 @@ function connectCDeck() {
 
                 if (data_array[0] == "name1") {
                     btn1_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-1/config.cfg", btn1_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-1/config.cfg", btn1_name + "\n")
                 }
                 else if (data_array[0] == "name2") {
                     btn2_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-2/config.cfg", btn2_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-2/config.cfg", btn2_name + "\n")
                 }
                 else if (data_array[0] == "name3") {
                     btn3_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-3/config.cfg", btn3_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-3/config.cfg", btn3_name + "\n")
                 }
                 else if (data_array[0] == "name4") {
                     btn4_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-4/config.cfg", btn4_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-4/config.cfg", btn4_name + "\n")
                 }
                 else if (data_array[0] == "name5") {
                     btn5_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-5/config.cfg", btn5_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-5/config.cfg", btn5_name + "\n")
                 }  
                 else if (data_array[0] == "name6") {
                     btn6_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-6/config.cfg", btn6_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-6/config.cfg", btn6_name + "\n")
                 }
                 else if (data_array[0] == "name7") {
                     btn7_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-7/config.cfg", btn7_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-7/config.cfg", btn7_name + "\n")
                 }
                 else if (data_array[0] == "name8") {
                     btn8_name = data_array[1]
-                    fs.writeFileSync("./config-site/button-8/config.cfg", btn8_name + "\n")
+                    fs.writeFileSync("./resources/app/config-site/button-8/config.cfg", btn8_name + "\n")
                 }
                 else if (data_array[0] == "led1base") {
                     values = data_array[1].toString()
                     led1base_rgb = values.split("/")
                     led1base_hex = rgbToHex(parseInt(led1base_rgb[0]), parseInt(led1base_rgb[1]), parseInt(led1base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-1/config.cfg", led1base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-1/config.cfg", led1base_hex + "\n")
                 }
                 else if (data_array[0] == "led2base") {
                     values = data_array[1].toString()
                     led2base_rgb = values.split("/")
                     led2base_hex = rgbToHex(parseInt(led2base_rgb[0]), parseInt(led2base_rgb[1]), parseInt(led2base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-2/config.cfg", led2base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-2/config.cfg", led2base_hex + "\n")
                 }
                 else if (data_array[0] == "led3base") {
                     values = data_array[1].toString()
                     led3base_rgb = values.split("/")
                     led3base_hex = rgbToHex(parseInt(led3base_rgb[0]), parseInt(led3base_rgb[1]), parseInt(led3base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-3/config.cfg", led3base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-3/config.cfg", led3base_hex + "\n")
                 }
                 else if (data_array[0] == "led4base") {
                     values = data_array[1].toString()
                     led4base_rgb = values.split("/")
                     led4base_hex = rgbToHex(parseInt(led4base_rgb[0]), parseInt(led4base_rgb[1]), parseInt(led4base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-4/config.cfg", led4base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-4/config.cfg", led4base_hex + "\n")
                 }
                 else if (data_array[0] == "led5base") {
                     values = data_array[1].toString()
                     led5base_rgb = values.split("/")
                     led5base_hex = rgbToHex(parseInt(led5base_rgb[0]), parseInt(led5base_rgb[1]), parseInt(led5base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-5/config.cfg", led5base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-5/config.cfg", led5base_hex + "\n")
                 }
                 else if (data_array[0] == "led6base") {
                     values = data_array[1].toString()
                     led6base_rgb = values.split("/")
                     led6base_hex = rgbToHex(parseInt(led6base_rgb[0]), parseInt(led6base_rgb[1]), parseInt(led6base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-6/config.cfg", led6base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-6/config.cfg", led6base_hex + "\n")
                 }
                 else if (data_array[0] == "led7base") {
                     values = data_array[1].toString()
                     led7base_rgb = values.split("/")
                     led7base_hex = rgbToHex(parseInt(led7base_rgb[0]), parseInt(led7base_rgb[1]), parseInt(led7base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-7/config.cfg", led7base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-7/config.cfg", led7base_hex + "\n")
                 }
                 else if (data_array[0] == "led8base") {
                     values = data_array[1].toString()
                     led8base_rgb = values.split("/")
                     led8base_hex = rgbToHex(parseInt(led8base_rgb[0]), parseInt(led8base_rgb[1]), parseInt(led8base_rgb[2]))
-                    fs.appendFileSync("./config-site/button-8/config.cfg", led8base_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-8/config.cfg", led8base_hex + "\n")
                 }
                 else if (data_array[0] == "led1fade") {
                     values = data_array[1].toString()
                     led1fade_rgb = values.split("/")
                     led1fade_hex = rgbToHex(parseInt(led1fade_rgb[0]), parseInt(led1fade_rgb[1]), parseInt(led1fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-1/config.cfg", led1fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-1/config.cfg", led1fade_hex + "\n")
                 }
                 else if (data_array[0] == "led2fade") {
                     values = data_array[1].toString()
                     led2fade_rgb = values.split("/")
                     led2fade_hex = rgbToHex(parseInt(led2fade_rgb[0]), parseInt(led2fade_rgb[1]), parseInt(led2fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-2/config.cfg", led2fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-2/config.cfg", led2fade_hex + "\n")
                 }
                 else if (data_array[0] == "led3fade") {
                     values = data_array[1].toString()
                     led3fade_rgb = values.split("/")
                     led3fade_hex = rgbToHex(parseInt(led3fade_rgb[0]), parseInt(led3fade_rgb[1]), parseInt(led3fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-3/config.cfg", led3fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-3/config.cfg", led3fade_hex + "\n")
                 }
                 else if (data_array[0] == "led4fade") {
                     values = data_array[1].toString()
                     led4fade_rgb = values.split("/")
                     led4fade_hex = rgbToHex(parseInt(led4fade_rgb[0]), parseInt(led4fade_rgb[1]), parseInt(led4fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-4/config.cfg", led4fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-4/config.cfg", led4fade_hex + "\n")
                 }
                 else if (data_array[0] == "led5fade") {
                     values = data_array[1].toString()
                     led5fade_rgb = values.split("/")
                     led5fade_hex = rgbToHex(parseInt(led5fade_rgb[0]), parseInt(led5fade_rgb[1]), parseInt(led5fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-5/config.cfg", led5fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-5/config.cfg", led5fade_hex + "\n")
                 }
                 else if (data_array[0] == "led6fade") {
                     values = data_array[1].toString()
                     led6fade_rgb = values.split("/")
                     led6fade_hex = rgbToHex(parseInt(led6fade_rgb[0]), parseInt(led6fade_rgb[1]), parseInt(led6fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-6/config.cfg", led6fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-6/config.cfg", led6fade_hex + "\n")
                 }
                 else if (data_array[0] == "led7fade") {
                     values = data_array[1].toString()
                     led7fade_rgb = values.split("/")
                     led7fade_hex = rgbToHex(parseInt(led7fade_rgb[0]), parseInt(led7fade_rgb[1]), parseInt(led7fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-7/config.cfg", led7fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-7/config.cfg", led7fade_hex + "\n")
                 }
                 else if (data_array[0] == "led8fade") {
                     values = data_array[1].toString()
                     led8fade_rgb = values.split("/")
                     led8fade_hex = rgbToHex(parseInt(led8fade_rgb[0]), parseInt(led8fade_rgb[1]), parseInt(led8fade_rgb[2]))
-                    fs.appendFileSync("./config-site/button-8/config.cfg", led8fade_hex + "\n")
+                    fs.appendFileSync("./resources/app/config-site/button-8/config.cfg", led8fade_hex + "\n")
                 }
                 else if (data_array[0] == "btn1") {
                     values = data_array[1].toString()
                     btn1_keys = values.split("/")
                     for (key in btn1_keys) {
                         if (key != btn1_keys.length - 1) {
-                            fs.appendFileSync("./config-site/button-1/config.cfg", btn1_keys[key] + "\n")
+                            fs.appendFileSync("./resources/app/config-site/button-1/config.cfg", btn1_keys[key] + "\n")
                         } else {
-                            fs.appendFileSync("./config-site/button-1/config.cfg", btn1_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-1/config.cfg", btn1_keys[key])
                         }
                     }
                 }
@@ -575,9 +575,9 @@ function connectCDeck() {
                     btn2_keys = values.split("/")
                     for (key in btn2_keys) {
                           if (key != btn2_keys.length - 1) {
-                              fs.appendFileSync("./config-site/button-2/config.cfg", btn2_keys[key] + "\n")
+                              fs.appendFileSync("./resources/app/config-site/button-2/config.cfg", btn2_keys[key] + "\n")
                           } else {
-                              fs.appendFileSync("./config-site/button-2/config.cfg", btn2_keys[key])
+                              fs.appendFileSync("./resources/app/config-site/button-2/config.cfg", btn2_keys[key])
                           }
                     }
                 }
@@ -586,9 +586,9 @@ function connectCDeck() {
                     btn3_keys = values.split("/")
                     for (key in btn3_keys) {
                         if (key != btn3_keys.length - 1) {
-                            fs.appendFileSync("./config-site/button-3/config.cfg", btn3_keys[key] + "\n")
+                            fs.appendFileSync("./resources/app/config-site/button-3/config.cfg", btn3_keys[key] + "\n")
                         } else {
-                            fs.appendFileSync("./config-site/button-3/config.cfg", btn3_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-3/config.cfg", btn3_keys[key])
                         }
                     }
                 }
@@ -597,10 +597,10 @@ function connectCDeck() {
                     btn4_keys = values.split("/")
                     for (key in btn4_keys) {
                         if (key != btn4_keys.length - 1) {
-                          fs.appendFileSync("./config-site/button-4/config.cfg", btn4_keys[key] + "\n")
-                          } else {
-                              fs.appendFileSync("./config-site/button-4/config.cfg", btn4_keys[key])
-                          }
+                            fs.appendFileSync("./resources/app/config-site/button-4/config.cfg", btn4_keys[key] + "\n")
+                        } else {
+                            fs.appendFileSync("./resources/app/config-site/button-4/config.cfg", btn4_keys[key])
+                        }
                 }
                 }
                 else if (data_array[0] == "btn5") {
@@ -608,10 +608,9 @@ function connectCDeck() {
                     btn5_keys = values.split("/")
                     for (key in btn5_keys) {
                         if (key != btn5_keys.length - 1) {
-                            fs.appendFileSync("./config-site/button-5/config.cfg", btn5_keys[key] + "\n")
-                        }
-                        else {
-                            fs.appendFileSync("./config-site/button-5/config.cfg", btn5_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-5/config.cfg", btn5_keys[key] + "\n")
+                        } else {
+                            fs.appendFileSync("./resources/app/config-site/button-5/config.cfg", btn5_keys[key])
                         }
                     }
                 }
@@ -620,10 +619,9 @@ function connectCDeck() {
                     btn6_keys = values.split("/")
                     for (key in btn6_keys) {
                         if (key != btn6_keys.length - 1) {
-                            fs.appendFileSync("./config-site/button-6/config.cfg", btn6_keys[key] + "\n")
-                        }
-                        else {
-                            fs.appendFileSync("./config-site/button-6/config.cfg", btn6_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-6/config.cfg", btn6_keys[key] + "\n")
+                        } else {
+                            fs.appendFileSync("./resources/app/config-site/button-6/config.cfg", btn6_keys[key])
                         }
                     }
                 }
@@ -632,10 +630,9 @@ function connectCDeck() {
                     btn7_keys = values.split("/")
                     for (key in btn7_keys) {
                         if (key != btn7_keys.length - 1) {
-                              fs.appendFileSync("./config-site/button-7/config.cfg", btn7_keys[key] + "\n")
-                        }
-                        else {
-                              fs.appendFileSync("./config-site/button-7/config.cfg", btn7_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-7/config.cfg", btn7_keys[key] + "\n")
+                        } else {
+                            fs.appendFileSync("./resources/app/config-site/button-7/config.cfg", btn7_keys[key])
                         }
                     }
                 }
@@ -644,10 +641,9 @@ function connectCDeck() {
                     btn8_keys = values.split("/")
                     for (key in btn8_keys) {
                         if (key != btn8_keys.length - 1) {
-                            fs.appendFileSync("./config-site/button-8/config.cfg", btn8_keys[key] + "\n")
-                        }
-                        else {
-                            fs.appendFileSync("./config-site/button-8/config.cfg", btn8_keys[key])
+                            fs.appendFileSync("./resources/app/config-site/button-8/config.cfg", btn8_keys[key] + "\n")
+                        } else {
+                            fs.appendFileSync("./resources/app/config-site/button-8/config.cfg", btn8_keys[key])
                         }
                     }
                 }
@@ -698,18 +694,18 @@ async function checkPorts() {
                 if (fn_port.serialNumber == port_serialNumber && !currently_connected) {
                     port = fn_port.path
 
-                    let temp_general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+                    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 
                     if (temp_general_config[0] != port) {
                         temp_config_save[0] = port
-                        fs.writeFileSync("./config.cfg", "")
+                        fs.writeFileSync("./resources/app/assets/config.cfg", "")
 
                         for (let i = 0; i < temp_general_config.length; i++) {
                             if (i != temp_general_config.length - 1) {
-                                fs.appendFileSync("./config.cfg", temp_general_config[i] + "\n")
+                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
                             }
                             else {
-                                fs.appendFileSync("./config.cfg", temp_general_config[i])
+                                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
                             }
                         }
                     }        

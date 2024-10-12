@@ -2,10 +2,10 @@ const fs = require("fs")
 const { ipcRenderer } = require("electron")
 const ipc = ipcRenderer
 
-let general_config = fs.readFileSync("./config.cfg", "utf-8").split(/\r?\n/)
+let general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 let lang_name = general_config[1]
 
-let lang_str = fs.readFileSync(lang_name, "utf-8")
+let lang_str = fs.readFileSync("./resources/app/assets/lang/" + lang_name + ".lang", "utf-8")
 let lang = lang_str.split(/\n?\r/)
 
 let headline = document.getElementById("headline-custom")
@@ -15,8 +15,8 @@ let accept_span = document.getElementById("ok-span")
 
 headline.innerHTML =  lang[177]
 text_span.innerHTML = lang[178]
-redirect_span.innerHTML = lang[179]
-accept_span.innerHTML = lang[176]
+redirect_span.innerHTML = lang[182]
+accept_span.innerHTML = lang[181]
 
 document.getElementById("ok").addEventListener("click", () => {
     ipc.send("errorbox-name-incomplete-close")
