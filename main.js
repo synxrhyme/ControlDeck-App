@@ -89,6 +89,7 @@ const createWindow = () => {
         })
       
         errorBox.loadFile(path.join(assets_path, type, "index.html"))
+        errorBox.webContents.toggleDevTools()
 
         errorBox.once('ready-to-show', () => {
             errorBox.show()
@@ -98,13 +99,9 @@ const createWindow = () => {
             errorBox.destroy()
         })
         
-        ipcMain.on("errorbox-name-incomplete-redirect", () => {
+        ipcMain.on("errorbox-" + type + "-redirect", () => {
             win.webContents.send("errorbox-redirect")
 
-            errorBox.destroy()
-        })
-
-        ipcMain.on("errorbox-name-incomplete-close", () => {
             errorBox.destroy()
         })
     }
