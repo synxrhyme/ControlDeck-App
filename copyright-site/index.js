@@ -6,7 +6,7 @@ const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "ut
 
 let lang_name = general_config[1]
 let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\n?\r/)
+const lang = lang_str.split(/\r?\n/)
 
 let headline = document.getElementById("headline")
 

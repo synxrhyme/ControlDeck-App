@@ -8,7 +8,7 @@ const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "ut
 
 let lang_name = general_config[1]
 let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\n?\r/)
+const lang = lang_str.split(/\r?\n/)
 
 let headline = document.getElementById("headline")
 
@@ -81,7 +81,7 @@ record_select.options[1].innerHTML = lang[31];
 back_span.innerHTML = lang[6]
 
 document.getElementById("checkbox-always-on-top").addEventListener("click", () => {
-    ipc.send("alwaysOnTop")
+    ipc.invoke("alwaysOnTop")
 
     let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
 

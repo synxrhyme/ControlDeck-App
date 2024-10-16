@@ -1,3 +1,4 @@
+const { error } = require('console')
 const { ipcMain, Menu, Tray, Notification, dialog } = require('electron')
 const { app, BrowserWindow } = require('electron/main')
 const fs = require("fs")
@@ -17,10 +18,11 @@ let alwaysOnTop_array = general_config[2].split("=")
 let alwaysOnTop_str = alwaysOnTop_array[1]
 let alwaysOnTop = (alwaysOnTop_str === "true")
 
+let dialogWindow = null
+let errorBox = null
+
 let unsaved_changes = false
 let currently_connected = false
-
-let tray = null
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -36,8 +38,10 @@ const createWindow = () => {
         }
     })
 
+    win.toggleDevTools()
+
     function createCustomDialog() {
-        const dialogWindow = new BrowserWindow({
+        dialogWindow = new BrowserWindow({
             width: 450,
             height: 165,
             resizable: false,
@@ -51,30 +55,19 @@ const createWindow = () => {
                 contextIsolation: false,
             }
         })
-      
+
         dialogWindow.loadFile(path.join(assets_path, "dialog-window", "index.html"))
+        dialogWindow.webContents.toggleDevTools()
 
-        dialogWindow.once('ready-to-show', () => {
-            dialogWindow.show()
-        })
-
-        ipcMain.on("dialog-close", () => {
+        dialogWindow.once('ready-to-show', ()      => { dialogWindow.show()    })
+        dialogWindow.on("close",           (event) => {
+            event.preventDefault()
             dialogWindow.destroy()
-        })
-
-        ipcMain.on("dialog-apply", () => {
-            win.webContents.send("dialog-apply")
-        })
-        ipcMain.on("dialog-exit", () => {
-            win.webContents.send("dialog-exit")
-        })
-        ipcMain.on("dialog-cancel", () => {
-            win.webContents.send("dialog-cancel")
         })
     }
 
     function createErrorBox(type) {
-        const errorBox = new BrowserWindow({
+        errorBox = new BrowserWindow({
             width: 450,
             height: 200,
             resizable: false,
@@ -87,33 +80,50 @@ const createWindow = () => {
                 contextIsolation: false,
             }
         })
-      
+
         errorBox.loadFile(path.join(assets_path, type, "index.html"))
         errorBox.webContents.toggleDevTools()
 
-        errorBox.once('ready-to-show', () => {
-            errorBox.show()
-        })
-
-        ipcMain.on("errorbox-" + type + "-close", () => {
-            errorBox.destroy()
-        })
-        
-        ipcMain.on("errorbox-" + type + "-redirect", () => {
-            win.webContents.send("errorbox-redirect")
-
+        errorBox.once('ready-to-show',  ()      => { errorBox.show() })
+        errorBox.on("close",            (event) => {
+            event.preventDefault()
             errorBox.destroy()
         })
     }
 
-    win.on('close', function(event) {
+    ipcMain.on("toMain_dialog-apply", () => {
+        win.webContents.send("toRenderer_disconnect")
+        win.webContents.send("toRenderer_dialog-apply")
+    })
+    ipcMain.on("toMain_dialog-close", () => { dialogWindow.destroy() })
+    ipcMain.on("toMain_dialog-exit",  () => {
+        win.webContents.send("toRenderer_disconnect")
+        win.loadFile(path.join(__dirname, "config-site", "index.html"))
+        dialogWindow.destroy()
+    })
+
+    ipcMain.on("toMain_errorbox-close",    () => { errorBox.destroy() })
+    ipcMain.on("toMain_errorbox-redirect", () => {
+        win.loadFile(path.join(__dirname, "config-site", "index.html"))
+        errorBox.destroy(0)
+    })
+
+    ipcMain.on("toMain_connected",               () => { currently_connected = true            })
+    ipcMain.on("toMain_disconnected",            () => { currently_connected = false           })
+    ipcMain.on("toMain_unsavedValues",           () => { unsaved_changes = true                })
+    ipcMain.on("toMain_savedValues",             () => { unsaved_changes = false               })
+    ipcMain.on("toMain_askForExit",              () => { createCustomDialog()                  })
+    ipcMain.on("toMain_nameIncomplete",          () => { createErrorBox("name-incomplete")     })
+    ipcMain.on("toMain_controldeckNotConnected", () => { createErrorBox("cdeck-not-connected") })
+
+    win.on('close', (event) => {
         if (unsaved_changes && currently_connected) {
             event.preventDefault()
             createCustomDialog()
         }
     })
 
-    //win.removeMenu()
+    win.removeMenu()
     win.loadFile(path.join(__dirname, "main-menu", "index.html"))
 
     win.setAlwaysOnTop(alwaysOnTop, "screen")
@@ -126,74 +136,46 @@ const createWindow = () => {
     const from_tray = () => { win.show() }
     const close_app = () => { app.quit() }
 
-    tray = new Tray(icon_path)
+    const tray = new Tray(icon_path)
+
     const contextMenu = Menu.buildFromTemplate([
-        { label: "Minimize to tray", click: to_tray },
-        { label: "Show Window", click: from_tray    },
-        { label: "Close", click: close_app          },
+        { label: "Minimize to tray", click: to_tray   },
+        { label: "Show Window",      click: from_tray },
+        { label: "Close",            click: close_app },
     ])
-
-    tray.setToolTip('ControlDeck-App')
+    
+    tray.setToolTip(lang[1])
     tray.setContextMenu(contextMenu)
-    tray.on("click", () => {
-        win.isVisible()?win.minimize():win.show()
-    })
+    tray.on("click", () => { win.isVisible()?win.minimize():win.show() })
 
-    ipcMain.on("alwaysOnTop", () => {
+    ipcMain.on("toMain_alwaysOnTop", () => {
         alwaysOnTop = !alwaysOnTop
         win.setAlwaysOnTop(alwaysOnTop, "screen")
     })
 
-    ipcMain.on("manualClose", () => {
-        app.exit(0)
-    })
+    ipcMain.on("toMain_manualClose", () => { app.exit(0) })
 
-    ipcMain.on("unsavedValues", () => {
-        unsaved_changes = true
-    })
-
-    ipcMain.on("savedValues", () => {
-        unsaved_changes = false
-    })
-
-    ipcMain.on("connected", () => {
-        currently_connected = true
-    })
-
-    ipcMain.on("disconnected", () => {
-        currently_connected = false
-    })
-
-    ipcMain.on("restartApp", () => {
-        app.relaunch({ args: process.argv.slice(1).concat(["--relaunch"]) })
-        app.exit(0)
-    })
-
-    ipcMain.on("askForExit", () => {
-        createCustomDialog()
-    })
-
-    ipcMain.on("nameIncomplete", () => {
-        createErrorBox("name-incomplete")
-    })
-
-    ipcMain.on("controldeckNotConnected", () => {
-        createErrorBox("cdeck-not-connected")
-    })
-
-    ipcMain.on("applied", () => {
-        new Notification({
+    ipcMain.on("toMain_applied", () => {
+        let notification = new Notification({
             title: lang[180],
             body: "",
             icon: icon_path,
-          }).show()
+        })
+        notification.show()
+
+        setTimeout(() => {
+            notification.close()
+        }, 3000)
     })
 
     win.webContents.on("render-process-gone", function(event, detailed) {
         if (detailed.reason == "crashed") {
             app.relaunch({ args: process.argv.slice(1).concat(["--relaunch"]) })
-            dialog.showErrorBox(win, lang[170], lang[171])
+            async function showCrashedBox() { 
+                dialog.showErrorBox(lang[183], lang[184])
+            }
 
+            showCrashedBox()
             app.exit(0)
         }
     })
@@ -202,9 +184,7 @@ const createWindow = () => {
 app.setName(lang[0])
 app.setAppUserModelId(app.name)
 
-app.whenReady().then(() => {
-    createWindow()
-})
+app.whenReady().then(() => { createWindow() })
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

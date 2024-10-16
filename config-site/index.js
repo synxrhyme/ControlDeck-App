@@ -7,7 +7,10 @@ const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "ut
 
 let lang_name = general_config[1]
 let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\n?\r/)
+const lang = lang_str.split(/\r?\n/)
+
+Object.defineProperties(Array.prototype, { count: { value: function(value) { return this.filter(x => x==value).length }}})
+const conversion_hid_code_lang = { 0x00: lang[32], 0x04: lang[33], 0x05: lang[34], 0x06: lang[35], 0x07: lang[36], 0x08: lang[37], 0x09: lang[38], 0x0A: lang[39], 0x0B: lang[40], 0x0C: lang[41], 0x0D: lang[42], 0x0E: lang[43], 0x0F: lang[44], 0x10: lang[45], 0x11: lang[46], 0x12: lang[47], 0x13: lang[48], 0x14: lang[49], 0x15: lang[50], 0x16: lang[51], 0x17: lang[52], 0x18: lang[53], 0x19: lang[54], 0x1A: lang[55], 0x1B: lang[56], 0x1C: lang[57], 0x1D: lang[58], 0x1E: lang[60], 0x1F: lang[61], 0x20: lang[62], 0x21: lang[63], 0x22: lang[64], 0x23: lang[65], 0x24: lang[66], 0x25: lang[67], 0x26: lang[68], 0x27: lang[59], 0x28: lang[80], 0x29: lang[81], 0x2A: lang[82], 0x2B: lang[83], 0x2C: lang[84], 0x2D: lang[85], 0x2E: lang[86], 0x2F: lang[87], 0x30: lang[88], 0x31: lang[89], 0x33: lang[90], 0x34: lang[91], 0x35: lang[92], 0x36: lang[93], 0x37: lang[94], 0x39: lang[95], 0x3A: lang[96], 0x3B: lang[97], 0x3C: lang[98], 0x3D: lang[99], 0x3E: lang[100], 0x3F: lang[101], 0x40: lang[102], 0x41: lang[103], 0x42: lang[104], 0x43: lang[105], 0x44: lang[106], 0x45: lang[107], 0x46: lang[108], 0x47: lang[109], 0x48: lang[110], 0x49: lang[111], 0x4A: lang[112], 0x4B: lang[113], 0x4C: lang[114], 0x4D: lang[115], 0x4E: lang[116], 0x4F: lang[117], 0x50: lang[118], 0x51: lang[119], 0x52: lang[120], 0x53: lang[121], 0x54: lang[122], 0x55: lang[123], 0x56: lang[124], 0x57: lang[125], 0x58: lang[126], 0x59: lang[127], 0x5A: lang[128], 0x5B: lang[129], 0x5C: lang[130], 0x5D: lang[131], 0x5E: lang[132], 0x5F: lang[133], 0x60: lang[134], 0x61: lang[135], 0x62: lang[136], 0x4D: lang[137], 0x52: lang[138], 0x4E: lang[139], 0x50: lang[140], 0x4F: lang[141], 0x4A: lang[142], 0x51: lang[143], 0x4B: lang[144], 0x49: lang[145], 0x63: lang[146], 0x64: lang[147], 0x64: lang[148], 0x67: lang[149], 0x68: lang[150], 0x69: lang[151], 0x6A: lang[152], 0x6B: lang[153], 0x6C: lang[154], 0x6D: lang[155], 0x6E: lang[156], 0x6F: lang[157], 0x70: lang[158], 0x71: lang[159], 0x72: lang[160], 0x73: lang[161], 0xE0: lang[162], 0xE1: lang[163], 0xE2: lang[164], 0xE3: lang[165], 0xE4: lang[166], 0xE5: lang[167], 0xE6: lang[168], 0xE7: lang[169] }
 
 const btn1_cfg_path = path.join(path.dirname(__dirname), "config-site", "button-1", "btn-config.cfg")
 const btn2_cfg_path = path.join(path.dirname(__dirname), "config-site", "button-2", "btn-config.cfg")
@@ -19,7 +22,6 @@ const btn7_cfg_path = path.join(path.dirname(__dirname), "config-site", "button-
 const btn8_cfg_path = path.join(path.dirname(__dirname), "config-site", "button-8", "btn-config.cfg")
 
 let headline = document.getElementById("headline")
-
 let log = document.getElementById("log")
 let status_log = document.getElementById("status")
 let edit_spans = document.getElementsByClassName("edit-span")
@@ -28,9 +30,7 @@ let back_span = document.getElementById("back-span")
 document.title = lang[0]
 headline.innerHTML = lang[3]
 
-for (let i = 0; i < edit_spans.length; i++) {
-    edit_spans[i].innerHTML = lang[8]
-}
+for (let i = 0; i < edit_spans.length; i++) { edit_spans[i].innerHTML = lang[8] }
 
 log.innerHTML = lang[7]
 back_span.innerHTML = lang[6]
@@ -38,136 +38,6 @@ back_span.innerHTML = lang[6]
 status_log.innerHTML = ""
 status_log.style.color = "rgb(255, 230, 0)"
 status_log.innerHTML = lang[9]
-
-const conversion_hid_code_lang = {
-    0x00: lang[32],
-    0x04: lang[33],
-    0x05: lang[34],
-    0x06: lang[35],
-    0x07: lang[36],
-    0x08: lang[37],
-    0x09: lang[38],
-    0x0A: lang[39],
-    0x0B: lang[40],
-    0x0C: lang[41],
-    0x0D: lang[42],
-    0x0E: lang[43],
-    0x0F: lang[44],
-    0x10: lang[45],
-    0x11: lang[46],
-    0x12: lang[47],
-    0x13: lang[48],
-    0x14: lang[49],
-    0x15: lang[50],
-    0x16: lang[51],
-    0x17: lang[52],
-    0x18: lang[53],
-    0x19: lang[54],
-    0x1A: lang[55],
-    0x1B: lang[56],
-    0x1C: lang[57],
-    0x1D: lang[58],
-    0x1E: lang[60],
-    0x1F: lang[61],
-    0x20: lang[62],
-    0x21: lang[63],
-    0x22: lang[64],
-    0x23: lang[65],
-    0x24: lang[66],
-    0x25: lang[67],
-    0x26: lang[68],
-    0x27: lang[59],
-    0x28: lang[80],
-    0x29: lang[81],
-    0x2A: lang[82],
-    0x2B: lang[83],
-    0x2C: lang[84],
-    0x2D: lang[85],
-    0x2E: lang[86],
-    0x2F: lang[87],
-    0x30: lang[88],
-    0x31: lang[89],
-    0x33: lang[90],
-    0x34: lang[91],
-    0x35: lang[92],
-    0x36: lang[93],
-    0x37: lang[94],
-    0x39: lang[95],
-    0x3A: lang[96],
-    0x3B: lang[97],
-    0x3C: lang[98],
-    0x3D: lang[99],
-    0x3E: lang[100],
-    0x3F: lang[101],
-    0x40: lang[102],
-    0x41: lang[103],
-    0x42: lang[104],
-    0x43: lang[105], 
-    0x44: lang[106], 
-    0x45: lang[107], 
-    0x46: lang[108],
-    0x47: lang[109],
-    0x48: lang[110],
-    0x49: lang[111],
-    0x4A: lang[112],
-    0x4B: lang[113],
-    0x4C: lang[114],
-    0x4D: lang[115],
-    0x4E: lang[116],
-    0x4F: lang[117],
-    0x50: lang[118],
-    0x51: lang[119],
-    0x52: lang[120],
-    0x53: lang[121],
-    0x54: lang[122],
-    0x55: lang[123],
-    0x56: lang[124],
-    0x57: lang[125],
-    0x58: lang[126],
-    0x59: lang[127],
-    0x5A: lang[128],
-    0x5B: lang[129],
-    0x5C: lang[130],
-    0x5D: lang[131],
-    0x5E: lang[132],
-    0x5F: lang[133],
-    0x60: lang[134],
-    0x61: lang[135],
-    0x62: lang[136],
-    0x4D: lang[137],
-    0x52: lang[138],
-    0x4E: lang[139],
-    0x50: lang[140],
-    0x4F: lang[141],
-    0x4A: lang[142],
-    0x51: lang[143],
-    0x4B: lang[144],
-    0x49: lang[145],
-    0x63: lang[146],
-    0x64: lang[147],
-    0x64: lang[148],
-    0x67: lang[149],
-    0x68: lang[150],
-    0x69: lang[151],
-    0x6A: lang[152],
-    0x6B: lang[153],
-    0x6C: lang[154],
-    0x6D: lang[155],
-    0x6E: lang[156],
-    0x6F: lang[157],
-    0x70: lang[158],
-    0x71: lang[159],
-    0x72: lang[160],
-    0x73: lang[161],
-    0xE0: lang[162],
-    0xE1: lang[163],
-    0xE2: lang[164],
-    0xE3: lang[165],
-    0xE4: lang[166],
-    0xE5: lang[167],
-    0xE6: lang[168],
-    0xE7: lang[169],
-}
 
 let port_serialNumber = "7&2E21021&0&0000"
 
@@ -235,6 +105,15 @@ let btn6_cfg_array = []
 let btn7_cfg_array = []
 let btn8_cfg_array = []
 
+let btn1_hotkeyDisplay = []
+let btn2_hotkeyDisplay = []
+let btn3_hotkeyDisplay = []
+let btn4_hotkeyDisplay = []
+let btn5_hotkeyDisplay = []
+let btn6_hotkeyDisplay = []
+let btn7_hotkeyDisplay = []
+let btn8_hotkeyDisplay = []
+
 let name_button_1 = document.getElementById("name-button-1")
 let name_button_2 = document.getElementById("name-button-2")
 let name_button_3 = document.getElementById("name-button-3")
@@ -257,7 +136,12 @@ checkPorts()
 
 function update_values() {
     document.getElementById("button-1-config").addEventListener("click", () => {
-        window.location.href = "./button-1/" + record_method + "/index.html"
+        if (currently_connected) {
+            window.location.href = "./button-1/" + record_method + "/index.html"
+        }
+        else {
+            //errorbox
+        }  
     })
     /*
     document.getElementById("button-2-config").addEventListener("click", () => {
@@ -319,67 +203,207 @@ function update_values() {
     keys_button_7.innerHTML = ""
     keys_button_8.innerHTML = ""
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_1.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn1_cfg_array[i]])
-        } else {
-            keys_button_1.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn1_cfg_array[i]] + " + ")
+    btn1_hotkeyDisplay = []
+    btn2_hotkeyDisplay = []
+    btn3_hotkeyDisplay = []
+    btn4_hotkeyDisplay = []
+    btn5_hotkeyDisplay = []
+    btn6_hotkeyDisplay = []
+    btn7_hotkeyDisplay = []
+    btn8_hotkeyDisplay = []
+
+    for (var i = 3; i < 8; i++) {
+        btn1_hotkeyDisplay.push(conversion_hid_code_lang[btn1_cfg_array[i]])
+        btn2_hotkeyDisplay.push(conversion_hid_code_lang[btn2_cfg_array[i]])
+        btn3_hotkeyDisplay.push(conversion_hid_code_lang[btn3_cfg_array[i]])
+        btn4_hotkeyDisplay.push(conversion_hid_code_lang[btn4_cfg_array[i]])
+        btn5_hotkeyDisplay.push(conversion_hid_code_lang[btn5_cfg_array[i]])
+        btn6_hotkeyDisplay.push(conversion_hid_code_lang[btn6_cfg_array[i]])
+        btn7_hotkeyDisplay.push(conversion_hid_code_lang[btn7_cfg_array[i]])
+        btn8_hotkeyDisplay.push(conversion_hid_code_lang[btn8_cfg_array[i]])
+    }
+
+    if (btn1_hotkeyDisplay.count(lang[32]) == btn1_hotkeyDisplay.length) {
+        keys_button_1.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn1_hotkeyDisplay[i] == lang[32]) {
+                btn1_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn1_hotkeyDisplay.length; i++) {
+            if (i == btn1_hotkeyDisplay.length - 1) {
+                keys_button_1.insertAdjacentHTML("beforeend", btn1_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_1.insertAdjacentHTML("beforeend", btn1_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_2.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn2_cfg_array[i]])
-        } else {
-            keys_button_2.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn2_cfg_array[i]] + " + ")
+    if (btn2_hotkeyDisplay.count(lang[32]) == btn2_hotkeyDisplay.length) {
+        keys_button_2.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn2_hotkeyDisplay[i] == lang[32]) {
+                btn2_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn2_hotkeyDisplay.length; i++) {
+            if (i == btn2_hotkeyDisplay.length - 1) {
+                keys_button_2.insertAdjacentHTML("beforeend", btn2_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_2.insertAdjacentHTML("beforeend", btn2_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_3.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn3_cfg_array[i]])
-        } else {
-            keys_button_3.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn3_cfg_array[i]] + " + ")
+    if (btn3_hotkeyDisplay.count(lang[32]) == btn3_hotkeyDisplay.length) {
+        keys_button_3.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn3_hotkeyDisplay[i] == lang[32]) {
+                btn3_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn2_hotkeyDisplay.length; i++) {
+            if (i == btn3_hotkeyDisplay.length - 1) {
+                keys_button_3.insertAdjacentHTML("beforeend", btn3_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_3.insertAdjacentHTML("beforeend", btn3_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_4.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn4_cfg_array[i]])
-        } else {
-            keys_button_4.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn4_cfg_array[i]] + " + ")
+    if (btn4_hotkeyDisplay.count(lang[32]) == btn4_hotkeyDisplay.length) {
+        keys_button_4.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn4_hotkeyDisplay[i] == lang[32]) {
+                btn4_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn3_hotkeyDisplay.length; i++) {
+            if (i == btn3_hotkeyDisplay.length - 1) {
+                keys_button_4.insertAdjacentHTML("beforeend", btn4_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_4.insertAdjacentHTML("beforeend", btn4_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_5.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn5_cfg_array[i]])
-        } else {
-            keys_button_5.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn5_cfg_array[i]] + " + ")
+    if (btn5_hotkeyDisplay.count(lang[32]) == btn5_hotkeyDisplay.length) {
+        keys_button_5.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn5_hotkeyDisplay[i] == lang[32]) {
+                btn5_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn5_hotkeyDisplay.length; i++) {
+            if (i == btn5_hotkeyDisplay.length - 1) {
+                keys_button_5.insertAdjacentHTML("beforeend", btn5_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_5.insertAdjacentHTML("beforeend", btn5_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_6.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn6_cfg_array[i]])
-        } else {
-            keys_button_6.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn6_cfg_array[i]] + " + ")
+    if (btn6_hotkeyDisplay.count(lang[32]) == btn6_hotkeyDisplay.length) {
+        keys_button_6.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn6_hotkeyDisplay[i] == lang[32]) {
+                btn6_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn6_hotkeyDisplay.length; i++) {
+            if (i == btn6_hotkeyDisplay.length - 1) {
+                keys_button_6.insertAdjacentHTML("beforeend", btn6_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_6.insertAdjacentHTML("beforeend", btn6_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_7.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn7_cfg_array[i]])
-        } else {
-            keys_button_7.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn7_cfg_array[i]] + " + ")
+    if (btn7_hotkeyDisplay.count(lang[32]) == btn7_hotkeyDisplay.length) {
+        keys_button_7.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn7_hotkeyDisplay[i] == lang[32]) {
+                btn7_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn7_hotkeyDisplay.length; i++) {
+            if (i == btn7_hotkeyDisplay.length - 1) {
+                keys_button_7.insertAdjacentHTML("beforeend", btn7_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_7.insertAdjacentHTML("beforeend", btn7_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            keys_button_8.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn8_cfg_array[i]])
-        } else {
-            keys_button_8.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn8_cfg_array[i]] + " + ")
+    if (btn8_hotkeyDisplay.count(lang[32]) == btn8_hotkeyDisplay.length) {
+        keys_button_8.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (btn8_hotkeyDisplay[i] == lang[32]) {
+                btn8_hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < btn8_hotkeyDisplay.length; i++) {
+            if (i == btn8_hotkeyDisplay.length - 1) {
+                keys_button_8.insertAdjacentHTML("beforeend", btn8_hotkeyDisplay[i])
+            }
+            else {
+                keys_button_8.insertAdjacentHTML("beforeend", btn8_hotkeyDisplay[i] + " + ")
+            }
         }
     }
 }
@@ -416,7 +440,7 @@ function connectCDeck() {
 
     serialPort.on('data', function (data) {
         data_str = data.toString()
-
+        
         if (newData) {
             complete_data_str = ""
             complete_data_str = data_str
@@ -424,7 +448,7 @@ function connectCDeck() {
         else {
             complete_data_str = complete_data_str.concat(data_str)
         }
-
+        
         if (data_str.indexOf("-") == -1) {
             newData = false
         }

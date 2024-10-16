@@ -10,36 +10,25 @@ const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "ut
 
 let lang_name = general_config[1]
 let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\n?\r/)
+const lang = lang_str.split(/\r?\n/)
+
+Object.defineProperties(Array.prototype, { count: { value: function(value) { return this.filter(x => x==value).length }}})
+const conversion_hid_code_lang = { 0x00: lang[32], 0x04: lang[33], 0x05: lang[34], 0x06: lang[35], 0x07: lang[36], 0x08: lang[37], 0x09: lang[38], 0x0A: lang[39], 0x0B: lang[40], 0x0C: lang[41], 0x0D: lang[42], 0x0E: lang[43], 0x0F: lang[44], 0x10: lang[45], 0x11: lang[46], 0x12: lang[47], 0x13: lang[48], 0x14: lang[49], 0x15: lang[50], 0x16: lang[51], 0x17: lang[52], 0x18: lang[53], 0x19: lang[54], 0x1A: lang[55], 0x1B: lang[56], 0x1C: lang[57], 0x1D: lang[58], 0x1E: lang[60], 0x1F: lang[61], 0x20: lang[62], 0x21: lang[63], 0x22: lang[64], 0x23: lang[65], 0x24: lang[66], 0x25: lang[67], 0x26: lang[68], 0x27: lang[59], 0x28: lang[80], 0x29: lang[81], 0x2A: lang[82], 0x2B: lang[83], 0x2C: lang[84], 0x2D: lang[85], 0x2E: lang[86], 0x2F: lang[87], 0x30: lang[88], 0x31: lang[89], 0x33: lang[90], 0x34: lang[91], 0x35: lang[92], 0x36: lang[93], 0x37: lang[94], 0x39: lang[95], 0x3A: lang[96], 0x3B: lang[97], 0x3C: lang[98], 0x3D: lang[99], 0x3E: lang[100], 0x3F: lang[101], 0x40: lang[102], 0x41: lang[103], 0x42: lang[104], 0x43: lang[105], 0x44: lang[106], 0x45: lang[107], 0x46: lang[108], 0x47: lang[109], 0x48: lang[110], 0x49: lang[111], 0x4A: lang[112], 0x4B: lang[113], 0x4C: lang[114], 0x4D: lang[115], 0x4E: lang[116], 0x4F: lang[117], 0x50: lang[118], 0x51: lang[119], 0x52: lang[120], 0x53: lang[121], 0x54: lang[122], 0x55: lang[123], 0x56: lang[124], 0x57: lang[125], 0x58: lang[126], 0x59: lang[127], 0x5A: lang[128], 0x5B: lang[129], 0x5C: lang[130], 0x5D: lang[131], 0x5E: lang[132], 0x5F: lang[133], 0x60: lang[134], 0x61: lang[135], 0x62: lang[136], 0x4D: lang[137], 0x52: lang[138], 0x4E: lang[139], 0x50: lang[140], 0x4F: lang[141], 0x4A: lang[142], 0x51: lang[143], 0x4B: lang[144], 0x49: lang[145], 0x63: lang[146], 0x64: lang[147], 0x64: lang[148], 0x67: lang[149], 0x68: lang[150], 0x69: lang[151], 0x6A: lang[152], 0x6B: lang[153], 0x6C: lang[154], 0x6D: lang[155], 0x6E: lang[156], 0x6F: lang[157], 0x70: lang[158], 0x71: lang[159], 0x72: lang[160], 0x73: lang[161], 0xE0: lang[162], 0xE1: lang[163], 0xE2: lang[164], 0xE3: lang[165], 0xE4: lang[166], 0xE5: lang[167], 0xE6: lang[168], 0xE7: lang[169] }
+const conversion_code_hid_lang = { [lang[32]]: 0x00, [lang[33]]: 0x04, [lang[34]]: 0x05, [lang[35]]: 0x06, [lang[36]]: 0x07, [lang[37]]: 0x08, [lang[38]]: 0x09, [lang[39]]: 0x0A, [lang[40]]: 0x0B, [lang[41]]: 0x0C, [lang[42]]: 0x0D, [lang[43]]: 0x0E, [lang[44]]: 0x0F, [lang[45]]: 0x10, [lang[46]]: 0x11, [lang[47]]: 0x12, [lang[48]]: 0x13, [lang[49]]: 0x14, [lang[50]]: 0x15, [lang[51]]: 0x16, [lang[52]]: 0x17, [lang[53]]: 0x18, [lang[54]]: 0x19, [lang[55]]: 0x1A, [lang[56]]: 0x1B, [lang[57]]: 0x1C, [lang[58]]: 0x1D, [lang[60]]: 0x1E, [lang[61]]: 0x1F, [lang[62]]: 0x20, [lang[63]]: 0x21, [lang[64]]: 0x22, [lang[65]]: 0x23, [lang[66]]: 0x24, [lang[67]]: 0x25, [lang[68]]: 0x26, [lang[59]]: 0x27, [lang[80]]: 0x28, [lang[81]]: 0x29, [lang[82]]: 0x2A, [lang[83]]: 0x2B, [lang[84]]: 0x2C, [lang[85]]: 0x2D, [lang[86]]: 0x2E, [lang[87]]: 0x2F, [lang[88]]: 0x30, [lang[89]]: 0x31, [lang[90]]: 0x33, [lang[91]]: 0x34, [lang[92]]: 0x35, [lang[93]]: 0x36, [lang[94]]: 0x37, [lang[95]]: 0x39, [lang[96]]: 0x3A, [lang[97]]: 0x3B, [lang[98]]: 0x3C, [lang[99]]: 0x3D, [lang[100]]: 0x3E, [lang[101]]: 0x3F, [lang[102]]: 0x40, [lang[103]]: 0x41, [lang[104]]: 0x42, [lang[105]]: 0x43,  [lang[106]]: 0x44,  [lang[107]]: 0x45,  [lang[108]]: 0x46, [lang[109]]: 0x47, [lang[110]]: 0x48, [lang[111]]: 0x49, [lang[112]]: 0x4A, [lang[113]]: 0x4B, [lang[114]]: 0x4C, [lang[115]]: 0x4D, [lang[116]]: 0x4E, [lang[117]]: 0x4F, [lang[118]]: 0x50, [lang[119]]: 0x51, [lang[120]]: 0x52, [lang[121]]: 0x53, [lang[122]]: 0x54, [lang[123]]: 0x55, [lang[124]]: 0x56, [lang[125]]: 0x57, [lang[126]]: 0x58, [lang[127]]: 0x59, [lang[128]]: 0x5A, [lang[129]]: 0x5B, [lang[130]]: 0x5C, [lang[131]]: 0x5D, [lang[132]]: 0x5E, [lang[133]]: 0x5F, [lang[134]]: 0x60, [lang[135]]: 0x61, [lang[136]]: 0x62, [lang[137]]: 0x4D, [lang[138]]: 0x52, [lang[139]]: 0x4E, [lang[140]]: 0x50, [lang[141]]: 0x4F, [lang[142]]: 0x4A, [lang[143]]: 0x51, [lang[144]]: 0x4B, [lang[145]]: 0x49, [lang[146]]: 0x63, [lang[147]]: 0x64, [lang[148]]: 0x64, [lang[149]]: 0x67, [lang[150]]: 0x68, [lang[151]]: 0x69, [lang[152]]: 0x6A, [lang[153]]: 0x6B, [lang[154]]: 0x6C, [lang[155]]: 0x6D, [lang[156]]: 0x6E, [lang[157]]: 0x6F, [lang[158]]: 0x70, [lang[159]]: 0x71, [lang[160]]: 0x72, [lang[161]]: 0x73, [lang[162]]: 0xE0, [lang[163]]: 0xE1, [lang[164]]: 0xE2, [lang[165]]: 0xE3, [lang[166]]: 0xE4, [lang[167]]: 0xE5, [lang[168]]: 0xE6, [lang[169]]: 0xE7 }
 
 let firstTrigger = true
 
-const lang_32 = lang[32]; const lang_33 = lang[33]; const lang_34 = lang[34]; const lang_35 = lang[35]; const lang_36 = lang[36]; const lang_37 = lang[37]; const lang_38 = lang[38]; const lang_39 = lang[39]; const lang_40 = lang[40]; const lang_41 = lang[41]; const lang_42 = lang[42]; const lang_43 = lang[43]; const lang_44 = lang[44]; const lang_45 = lang[45]; const lang_46 = lang[46]; const lang_47 = lang[47]; const lang_48 = lang[48]; const lang_49 = lang[49]; const lang_50 = lang[50]; const lang_51 = lang[51]; const lang_52 = lang[52]; const lang_53 = lang[53]; const lang_54 = lang[54]; const lang_55 = lang[55]; const lang_56 = lang[56]; const lang_57 = lang[57]; const lang_58 = lang[58]; const lang_60 = lang[60]; const lang_61 = lang[61]; const lang_62 = lang[62]; const lang_63 = lang[63]; const lang_64 = lang[64]; const lang_65 = lang[65]; const lang_66 = lang[66]; const lang_67 = lang[67]; const lang_68 = lang[68]; const lang_59 = lang[59]; const lang_80 = lang[80]; const lang_81 = lang[81]; const lang_82 = lang[82]; const lang_83 = lang[83]; const lang_84 = lang[84]; const lang_85 = lang[85]; const lang_86 = lang[86]; const lang_87 = lang[87]; const lang_88 = lang[88]; const lang_89 = lang[89]; const lang_90 = lang[90]; const lang_91 = lang[91]; const lang_92 = lang[92]; const lang_93 = lang[93]; const lang_94 = lang[94]; const lang_95 = lang[95]; const lang_96 = lang[96]; const lang_97 = lang[97]; const lang_98 = lang[98]; const lang_99 = lang[99]; const lang_100 = lang[100]; const lang_101 = lang[101]; const lang_102 = lang[102]; const lang_103 = lang[103]; const lang_104 = lang[104]; const lang_105 = lang[105]; const lang_106 = lang[106]; const lang_107 = lang[107]; const lang_108 = lang[108]; const lang_109 = lang[109]; const lang_110 = lang[110]; const lang_111 = lang[111]; const lang_112 = lang[112]; const lang_113 = lang[113]; const lang_114 = lang[114]; const lang_115 = lang[115]; const lang_116 = lang[116]; const lang_117 = lang[117]; const lang_118 = lang[118]; const lang_119 = lang[119]; const lang_120 = lang[120]; const lang_121 = lang[121]; const lang_122 = lang[122]; const lang_123 = lang[123]; const lang_124 = lang[124]; const lang_125 = lang[125]; const lang_126 = lang[126]; const lang_127 = lang[127]; const lang_128 = lang[128]; const lang_129 = lang[129]; const lang_130 = lang[130]; const lang_131 = lang[131]; const lang_132 = lang[132]; const lang_133 = lang[133]; const lang_134 = lang[134]; const lang_135 = lang[135]; const lang_136 = lang[136]; const lang_137 = lang[137]; const lang_138 = lang[138]; const lang_139 = lang[139]; const lang_140 = lang[140]; const lang_141 = lang[141]; const lang_142 = lang[142]; const lang_143 = lang[143]; const lang_144 = lang[144]; const lang_145 = lang[145]; const lang_146 = lang[146]; const lang_147 = lang[147]; const lang_148 = lang[148]; const lang_149 = lang[149]; const lang_150 = lang[150]; const lang_151 = lang[151]; const lang_152 = lang[152]; const lang_153 = lang[153]; const lang_154 = lang[154]; const lang_155 = lang[155]; const lang_156 = lang[156]; const lang_157 = lang[157]; const lang_158 = lang[158]; const lang_159 = lang[159]; const lang_160 = lang[160]; const lang_161 = lang[161]; const lang_162 = lang[162]; const lang_163 = lang[163]; const lang_164 = lang[164]; const lang_165 = lang[165]; const lang_166 = lang[166]; const lang_167 = lang[167]; const lang_168 = lang[168]; const lang_169 = lang[169]
-
-const conversion_hid_code_lang = { 0x00: [lang_32], 0x04: [lang_33], 0x05: [lang_34], 0x06: [lang_35], 0x07: [lang_36], 0x08: [lang_37], 0x09: [lang_38], 0x0A: [lang_39], 0x0B: [lang_40], 0x0C: [lang_41], 0x0D: [lang_42], 0x0E: [lang_43], 0x0F: [lang_44], 0x10: [lang_45], 0x11: [lang_46], 0x12: [lang_47], 0x13: [lang_48], 0x14: [lang_49], 0x15: [lang_50], 0x16: [lang_51], 0x17: [lang_52], 0x18: [lang_53], 0x19: [lang_54], 0x1A: [lang_55], 0x1B: [lang_56], 0x1C: [lang_57], 0x1D: [lang_58], 0x1E: [lang_60], 0x1F: [lang_61], 0x20: [lang_62], 0x21: [lang_63], 0x22: [lang_64], 0x23: [lang_65], 0x24: [lang_66], 0x25: [lang_67], 0x26: [lang_68], 0x27: [lang_59], 0x28: [lang_80], 0x29: [lang_81], 0x2A: [lang_82], 0x2B: [lang_83], 0x2C: [lang_84], 0x2D: [lang_85], 0x2E: [lang_86], 0x2F: [lang_87], 0x30: [lang_88], 0x31: [lang_89], 0x33: [lang_90], 0x34: [lang_91], 0x35: [lang_92], 0x36: [lang_93], 0x37: [lang_94], 0x39: [lang_95], 0x3A: [lang_96], 0x3B: [lang_97], 0x3C: [lang_98], 0x3D: [lang_99], 0x3E: [lang_100], 0x3F: [lang_101], 0x40: [lang_102], 0x41: [lang_103], 0x42: [lang_104], 0x43: [lang_105],  0x44: [lang_106],  0x45: [lang_107],  0x46: [lang_108], 0x47: [lang_109], 0x48: [lang_110], 0x49: [lang_111], 0x4A: [lang_112], 0x4B: [lang_113], 0x4C: [lang_114], 0x4D: [lang_115], 0x4E: [lang_116], 0x4F: [lang_117], 0x50: [lang_118], 0x51: [lang_119], 0x52: [lang_120], 0x53: [lang_121], 0x54: [lang_122], 0x55: [lang_123], 0x56: [lang_124], 0x57: [lang_125], 0x58: [lang_126], 0x59: [lang_127], 0x5A: [lang_128], 0x5B: [lang_129], 0x5C: [lang_130], 0x5D: [lang_131], 0x5E: [lang_132], 0x5F: [lang_133], 0x60: [lang_134], 0x61: [lang_135], 0x62: [lang_136], 0x4D: [lang_137], 0x52: [lang_138], 0x4E: [lang_139], 0x50: [lang_140], 0x4F: [lang_141], 0x4A: [lang_142], 0x51: [lang_143], 0x4B: [lang_144], 0x49: [lang_145], 0x63: [lang_146], 0x64: [lang_147], 0x64: [lang_148], 0x67: [lang_149], 0x68: [lang_150], 0x69: [lang_151], 0x6A: [lang_152], 0x6B: [lang_153], 0x6C: [lang_154], 0x6D: [lang_155], 0x6E: [lang_156], 0x6F: [lang_157], 0x70: [lang_158], 0x71: [lang_159], 0x72: [lang_160], 0x73: [lang_161], 0xE0: [lang_162], 0xE1: [lang_163], 0xE2: [lang_164], 0xE3: [lang_165], 0xE4: [lang_166], 0xE5: [lang_167], 0xE6: [lang_168], 0xE7: [lang_169] }
-const conversion_code_hid_lang = { [lang_32]: 0x00, [lang_33]: 0x04, [lang_34]: 0x05, [lang_35]: 0x06, [lang_36]: 0x07, [lang_37]: 0x08, [lang_38]: 0x09, [lang_39]: 0x0A, [lang_40]: 0x0B, [lang_41]: 0x0C, [lang_42]: 0x0D, [lang_43]: 0x0E, [lang_44]: 0x0F, [lang_45]: 0x10, [lang_46]: 0x11, [lang_47]: 0x12, [lang_48]: 0x13, [lang_49]: 0x14, [lang_50]: 0x15, [lang_51]: 0x16, [lang_52]: 0x17, [lang_53]: 0x18, [lang_54]: 0x19, [lang_55]: 0x1A, [lang_56]: 0x1B, [lang_57]: 0x1C, [lang_58]: 0x1D, [lang_60]: 0x1E, [lang_61]: 0x1F, [lang_62]: 0x20, [lang_63]: 0x21, [lang_64]: 0x22, [lang_65]: 0x23, [lang_66]: 0x24, [lang_67]: 0x25, [lang_68]: 0x26, [lang_59]: 0x27, [lang_80]: 0x28, [lang_81]: 0x29, [lang_82]: 0x2A, [lang_83]: 0x2B, [lang_84]: 0x2C, [lang_85]: 0x2D, [lang_86]: 0x2E, [lang_87]: 0x2F, [lang_88]: 0x30, [lang_89]: 0x31, [lang_90]: 0x33, [lang_91]: 0x34, [lang_92]: 0x35, [lang_93]: 0x36, [lang_94]: 0x37, [lang_95]: 0x39, [lang_96]: 0x3A, [lang_97]: 0x3B, [lang_98]: 0x3C, [lang_99]: 0x3D, [lang_100]: 0x3E, [lang_101]: 0x3F, [lang_102]: 0x40, [lang_103]: 0x41, [lang_104]: 0x42, [lang_105]: 0x43,  [lang_106]: 0x44,  [lang_107]: 0x45,  [lang_108]: 0x46, [lang_109]: 0x47, [lang_110]: 0x48, [lang_111]: 0x49, [lang_112]: 0x4A, [lang_113]: 0x4B, [lang_114]: 0x4C, [lang_115]: 0x4D, [lang_116]: 0x4E, [lang_117]: 0x4F, [lang_118]: 0x50, [lang_119]: 0x51, [lang_120]: 0x52, [lang_121]: 0x53, [lang_122]: 0x54, [lang_123]: 0x55, [lang_124]: 0x56, [lang_125]: 0x57, [lang_126]: 0x58, [lang_127]: 0x59, [lang_128]: 0x5A, [lang_129]: 0x5B, [lang_130]: 0x5C, [lang_131]: 0x5D, [lang_132]: 0x5E, [lang_133]: 0x5F, [lang_134]: 0x60, [lang_135]: 0x61, [lang_136]: 0x62, [lang_137]: 0x4D, [lang_138]: 0x52, [lang_139]: 0x4E, [lang_140]: 0x50, [lang_141]: 0x4F, [lang_142]: 0x4A, [lang_143]: 0x51, [lang_144]: 0x4B, [lang_145]: 0x49, [lang_146]: 0x63, [lang_147]: 0x64, [lang_148]: 0x64, [lang_149]: 0x67, [lang_150]: 0x68, [lang_151]: 0x69, [lang_152]: 0x6A, [lang_153]: 0x6B, [lang_154]: 0x6C, [lang_155]: 0x6D, [lang_156]: 0x6E, [lang_157]: 0x6F, [lang_158]: 0x70, [lang_159]: 0x71, [lang_160]: 0x72, [lang_161]: 0x73, [lang_162]: 0xE0, [lang_163]: 0xE1, [lang_164]: 0xE2, [lang_165]: 0xE3, [lang_166]: 0xE4, [lang_167]: 0xE5, [lang_168]: 0xE6, [lang_169]: 0xE7 }
-
-ipc.on("dialog-apply", (event, arg) => {
+ipc.on("toRenderer_dialog-apply", (event, arg) => {
     apply()
-    window.location.href = "../../index.html"
     
-    ipc.send("savedValues")
-    ipc.send("dialog-close")
+    ipc.send("toMain_savedValues")
+    ipc.send("toMain_dialog-close")
+
+    window.location.href = path.join(path.dirname(path.dirname(__dirname)), "index.html")
 })
 
-ipc.on("dialog-exit", (event, arg) => {
-    window.location.href = "../../index.html"
-
-    ipc.send("savedValues")
-    ipc.send("dialog-close")
-})
-
-ipc.on("dialog-cancel", (event, arg) => {
-    ipc.send("dialog-close")
-})
-
-ipc.on("errorbox-redirect", () => {
-    window.location.href = "../../index.html"
+ipc.on("toRenderer_disconnect", (event, arg) => {
+    disconnect_cdeck()
 })
 
 let headline = document.getElementById("headline")
@@ -74,23 +63,26 @@ let keysPressed = []
 let serialPort
 let port
 
+let led_base_input = document.getElementById("input_led_base")
+let led_fade_input = document.getElementById("input_led_fade")
+
 let port_serialNumber = "7&2E21021&0&0000"
 let currently_connected = false
 let firstTime = true
 
-let key1
-let key2
-let key3
-let key4
-let key5
+let gen_btn_cfg = fs.readFileSync(btn_cfg_path, "utf-8")
+let gen_btn_cfg_array = gen_btn_cfg.split(/\r?\n/)
 
-let hotkey = []
-let hotkeyCode = []
-let hotkeyHIDCode = []
+let hotkey        = []
+let hotkeyCode    = []
+let hotkeyDisplayFinal = []
 let hotkeyDisplay = []
 
-let led_base
-let led_fade
+hotkeyDisplay.push(conversion_hid_code_lang[gen_btn_cfg_array[3]])
+hotkeyDisplay.push(conversion_hid_code_lang[gen_btn_cfg_array[4]])
+hotkeyDisplay.push(conversion_hid_code_lang[gen_btn_cfg_array[5]])
+hotkeyDisplay.push(conversion_hid_code_lang[gen_btn_cfg_array[6]])
+hotkeyDisplay.push(conversion_hid_code_lang[gen_btn_cfg_array[7]])
 
 let config = []
 let config_str = ""
@@ -125,16 +117,8 @@ name_input.addEventListener("input", () => {
 led_base_input = document.getElementById("input_led_base")
 led_fade_input = document.getElementById("input_led_fade")
 
-led_base_input.value = led_base
-led_fade_input.value = led_fade
-
-hotkeyDisplay.push(key1)
-hotkeyDisplay.push(key2)
-hotkeyDisplay.push(key3)
-hotkeyDisplay.push(key4)
-hotkeyDisplay.push(key5)
-
-updateDisplayHotkey()
+led_base_input.value = gen_btn_cfg_array[1]
+led_fade_input.value = gen_btn_cfg_array[2]
 
 log = document.getElementById("log")
 output = document.getElementById("output")
@@ -143,18 +127,18 @@ document.getElementById("back-button").addEventListener("click", () => {
     if (currently_connected) {
         if (name_input.value.length > 0) {
             if (changed_values) {
-                ipc.send("askForExit")
+                ipc.send("toMain_askForExit")
             }
             else {
                 window.location.href = "../../index.html"
             }
         }
         else {
-            ipc.send("nameIncomplete")
+            ipc.send("toMain_nameIncomplete")
         }
     }
     else if (!currently_connected && changed_values){
-        ipc.send("controldeckNotConnected")
+        ipc.send("toMain_controldeckNotConnected")
     }
     else {
         window.location.href = "../../index.html"
@@ -250,8 +234,8 @@ function startRecording(event) {
         keysPressed = []
         hotkey = []
         hotkeyCode = []
-        hotkeyHIDCode = []
         hotkeyDisplay = []
+        hotkeyDisplayFinal = []
         recording = true
         clearTimeout(timeoutHandler)
         output.innerHTML = ""
@@ -291,10 +275,6 @@ function stopRecording(event, reason) {
     
         if (reason == null) {
             updateDisplayHotkey()
-
-            hotkeyCode.forEach((key) => {
-                hotkeyHIDCode.push(conversion_hid_code_lang[key])
-            })
         }
     }
 }
@@ -307,6 +287,15 @@ function timeoutStopRecording() {
     document.removeEventListener('keydown', startRecording)
     document.removeEventListener('keyup', stopRecording)
 }
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
 
 function exitStopRecording() {
     recording = false
@@ -331,44 +320,59 @@ function updateDisplayHotkey() {
 }
 
 function apply() {
-    if (currently_connected) {
+    if (!currently_connected) {
         if (name_input.value.length > 0) {
             config[0] = name_input.value
-            config[1] = led_base_input.value
-            config[2] = led_fade_input.value
+            
+            let led_base_clr = led_base_input.value
+            let led_fade_clr = led_fade_input.value
 
-            for (i in hotkeyDisplay) {
-                h = parseInt(i) + 3
-                config[h] = conversion_code_hid_lang[hotkeyDisplay[i]]
+            config[1] = led_base_clr
+            config[2] = led_fade_clr
+
+            hotkeyDisplayFinal = []
+
+            for (var i = 0; i < hotkeyDisplay.length; i++) {
+                hotkeyDisplayFinal.push(hotkeyDisplay[i])
             }
 
-            hotkey_length = hotkeyDisplay.length
-
-            if (hotkey_length < 5) {
-                for (let i = 5; i <= hotkeyDisplay.length; i--) {
-                    config[i + 3] = 0
+            if (hotkeyDisplay.length < 5) {
+                for (var i = 4; i >= hotkeyDisplay.length; i--) {
+                    console.log("i:", i)
+                    hotkeyDisplayFinal[i] = lang[32]
                 }
             }
+            for (var i = 0; i < 5; i++) {
+                config[i + 3] = conversion_code_hid_lang[hotkeyDisplayFinal[i]]
+            }
 
-            fs.writeFileSync(current_path + "config.cfg", "")
+            fs.writeFileSync(path.join(path.dirname(__dirname), "btn-config.cfg"), "")
             
             for (var i = 0; i < config.length; i++) {
                 if (i == config.length - 1) {
-                    fs.appendFileSync(path.join(assets_path, "config.cfg"), config[i].toString())
+                    console.log("cfg last:", i, "val:", config[i])
+                    fs.appendFileSync(path.join(path.dirname(__dirname), "btn-config.cfg"), config[i].toString())
                 }
                 else {
-                    fs.appendFileSync(path.join(assets_path, "config.cfg"), config[i].toString() + "\n")
+                    console.log("cfg nrml, i:", i, "val:", config[i])
+                    fs.appendFileSync(path.join(path.dirname(__dirname), "btn-config.cfg"), config[i].toString() + "\n")
                 }
             }
 
-            serialPort.write("name1," + config[0] + "\n")
-            serialPort.write("led1base," + config[1] + "\n")
-            serialPort.write("led1fade," + config[2] + "\n")
+            let led_base_clr_rgb = hexToRgb(led_base_clr)
+            let led_fade_clr_rgb = hexToRgb(led_fade_clr)
+
+            config[1] = led_base_clr_rgb.r + "/" + led_base_clr_rgb.g + "/" + led_base_clr_rgb.b
+            config[2] = led_fade_clr_rgb.r + "/" + led_fade_clr_rgb.g + "/" + led_fade_clr_rgb.b
+
+            //serialPort.write("name1,"    + config[0] + "\n")
+            //serialPort.write("led1base," + config[1] + "\n")
+            //serialPort.write("led1fade," + config[2] + "\n")
             
             var temp_str = "btn1,"
 
             for (var i = 3; i < config.length; i++) {
-                if (config[i] == config.length - 1) {
+                if (i == config.length - 1) {
                     temp_str += config[i]
                 }
                 else {
@@ -376,30 +380,21 @@ function apply() {
                 }
             }
 
-            serialPort.write(temp_str + "\n")
+            //serialPort.write(temp_str + "\n")
 
-            ipc.send("savedValues")
-            ipc.send("applied")
+            ipc.send("toMain_savedValues")
+            ipc.send("toMain_applied")
 
             changed_values = false
             firstTrigger = true
         }
         else {
-            ipc.send("nameIncomplete")
+            ipc.send("toMain_nameIncomplete")
         }
     }
     else {
-        ipc.send("controldeckNotConnected")
+        ipc.send("toMain_controldeckNotConnected")
     }
-}
-
-function componentToHex(c) {
-    hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex
-}
-
-function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b)
 }
 
 function connectCDeck() {
@@ -409,7 +404,7 @@ function connectCDeck() {
     })
 
     serialPort.on("open", () => {
-        ipc.send("connected")
+        ipc.send("toMain_connected")
         document.getElementById("back-button").addEventListener("click", disconnect_cdeck)
 
         status_log.innerHTML = ""
@@ -425,7 +420,7 @@ function connectCDeck() {
     })
 
     serialPort.on("close", () => {
-        ipc.send("disconnected")
+        ipc.send("toMain_disconnected")
         document.getElementById("back-button").removeEventListener("click", disconnect_cdeck)
 
         status_log.innerHTML = ""
@@ -495,19 +490,44 @@ function update_values() {
     led_base_input.value = btn_cfg_array[1]
     led_fade_input.value = btn_cfg_array[2]
 
+    hotkeyDisplay = []
+
+    hotkeyDisplay.push(conversion_hid_code_lang[btn_cfg_array[3]])
+    hotkeyDisplay.push(conversion_hid_code_lang[btn_cfg_array[4]])
+    hotkeyDisplay.push(conversion_hid_code_lang[btn_cfg_array[5]])
+    hotkeyDisplay.push(conversion_hid_code_lang[btn_cfg_array[6]])
+    hotkeyDisplay.push(conversion_hid_code_lang[btn_cfg_array[7]])
+
     output.innerHTML = ""
 
-    for (i = 3; i < 8; i++) {
-        if (i == 7) {
-            output.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn_cfg_array[i]])
-        } else {
-            output.insertAdjacentHTML("beforeend", conversion_hid_code_lang[btn_cfg_array[i]] + " + ")
+    if (hotkeyDisplay.count(lang[32]) == hotkeyDisplay.length) {
+        output.innerHTML = lang[32]
+    }
+    else {
+        for (var i = 4; i >= 0; i--) {
+            if (hotkeyDisplay[i] == lang[32]) {
+                hotkeyDisplay.pop(i)
+            }
+            else {
+                break
+            }
+        }
+
+        for (var i = 0; i < hotkeyDisplay.length; i++) {
+            if (i == hotkeyDisplay.length - 1) {
+                output.insertAdjacentHTML("beforeend", hotkeyDisplay[i])
+            }
+            else {
+                output.insertAdjacentHTML("beforeend", hotkeyDisplay[i] + " + ")
+            }
         }
     }
 }
 
 function disconnect_cdeck() {
-    serialPort.close()
+    if (currently_connected) {
+        serialPort.close()
+    }
 }
 
 function updateLenLeft() {
@@ -537,7 +557,7 @@ function updateLenLeft() {
 
 setInterval(() => {
     if (changed_values && firstTrigger) {
-        ipc.send("unsavedValues")
+        ipc.send("toMain_unsavedValues")
 
         firstTrigger = false
     }

@@ -7,26 +7,24 @@ const general_config = fs.readFileSync(path.join(path.dirname(__dirname), "confi
 
 let lang_name = general_config[1]
 let lang_str = fs.readFileSync(path.join(path.dirname(__dirname), "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\n?\r/)
+const lang = lang_str.split(/\r?\n/)
 
-let headline = document.getElementById("headline-custom")
-let apply_span = document.getElementById("apply-span")
-let exit_span = document.getElementById("exit-span")
+let headline    = document.getElementById("headline-custom")
+let apply_span  = document.getElementById("apply-span")
+let exit_span   = document.getElementById("exit-span")
 let cancel_span = document.getElementById("cancel-span")
 
-headline.innerHTML =  lang[173]
-apply_span.innerHTML = lang[170]
-exit_span.innerHTML = lang[171]
+headline.innerHTML    = lang[173]
+apply_span.innerHTML  = lang[170]
+exit_span.innerHTML   = lang[171]
 cancel_span.innerHTML = lang[172]
 
-document.getElementById("apply").addEventListener("click", () => {
-    ipc.send("dialog-apply")
+document.getElementById("apply").addEventListener("click",  () => {
+    ipc.send("toMain_savedValues")
+    ipc.send("toMain_dialog-apply")
 })
-
-document.getElementById("exit").addEventListener("click", () => {
-    ipc.send("dialog-exit")
+document.getElementById("exit").addEventListener("click",   () => {
+    ipc.send("toMain_savedValues")
+    ipc.send("toMain_dialog-exit")
 })
-
-document.getElementById("cancel").addEventListener("click", () => {
-    ipc.send("dialog-cancel")
-})
+document.getElementById("cancel").addEventListener("click", () => { ipc.send("toMain_dialog-close") })
