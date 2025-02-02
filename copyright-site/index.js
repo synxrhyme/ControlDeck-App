@@ -1,19 +1,20 @@
-const fs = require("fs")
-const path = require("path")
+const fs   = require("fs");
+const path = require("path");
 
-const assets_path = path.join(path.dirname(__dirname), "resources", "assets")
-const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
+const assets_path = path.join(path.dirname(__dirname), "resources", "assets");
 
-let lang_name = general_config[1]
-let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\r?\n/)
+const main_config_path = path.join(assets_path, "config.json");
+const main_config = JSON.parse(fs.readFileSync(main_config_path, "utf-8"));
 
-let headline = document.getElementById("headline")
+const lang_path = path.join(assets_path, "lang", main_config.lang_name + ".lang");
+const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);
 
-let copyright_text = document.getElementById("copyright")
-let back_span = document.getElementById("back-span")
+const headline = document.getElementById("headline");
 
-document.title = lang[0]
-headline.innerHTML = lang[4]
+const copyright_text = document.getElementById("copyright");
+const back_span = document.getElementById("back-span");
+
+document.title = lang[0];
+headline.innerHTML = lang[4];
 
 back_span.innerHTML = lang[6]

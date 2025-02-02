@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../resources/assets/css/fontawesome-all.css" />
+    <link rel="stylesheet" href="../../resources/assets/css/general.css" />
+    <link rel="stylesheet" href="../../resources/assets/css/loader.css" />
+    <link rel="stylesheet" href="../../resources/assets/css/record-hotkey.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>Document</title>
+  </head>
+
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    <div id="loader-section-left"></div>
+    <div id="loader-section-right"></div>
+  </div>
+  
+  <body>
+    <header>
+      <p id="headline">Überschrift</p>
+    </header>
+
+    <main>
+      <div class="log-div">
+        <p class="text" id="status"></p>
+      </div>
+      
+      <div class="menu">
+        <div class="inputs">
+          <div class="left">
+            <div class="name">
+              <p class="text" id="name-span"></p>
+              <input type="text" id="name_input">
+                <p class="text" id="len_left">20</p>
+              </input>
+            </div>
+          
+            <div class="led">
+              <div class="led-base">
+                <p class="text" id="led-base-span"></p>
+                <input type="color" id="input_led_base">
+              </div>
+
+              <div class="led-fade">
+                <p class="text" id="led-fade-span"></p>
+                <input type="color" id="input_led_fade">
+              </div>
+
+            </div>
+          </div>
+
+          <div class="select-hotkey">
+            <select class="key-input" name="key1" id="key1-select"></select>
+            <select class="key-input" name="key2" id="key2-select"></select>
+            <select class="key-input" name="key3" id="key3-select"></select>
+            <select class="key-input" name="key4" id="key4-select"></select>
+            <select class="key-input" name="key5" id="key5-select"></select>
+          </div>
+        </div>
+
+        <button class="btn" id="apply-button">
+          <span id="apply-span"></span>
+        </button>
+      </div>
+
+      <button class="back-btn" id="back-button">
+        <span id="back-span"></span>
+      </button>
+    </main>
+    
+    <script src="./index.js"></script>
+    <script src="../../renderer.js"></script>
+  </body>
+</html>

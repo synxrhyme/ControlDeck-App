@@ -1,5 +1,5 @@
-ControlDeck Configuration-Application
-ControlDeck - App
+XDeck Configuration-Application
+XDeck - App
 Settings
 Configuration
 Legal
@@ -7,7 +7,7 @@ Quit program
 Back to main menu
 Status:&nbsp;&nbsp;
 Edit...
-ControlDeck not connected
+XDeck not connected
 Error: Another program is using the COM-Port
 Connected
 Button 1
@@ -27,3 +27,22 @@ Apply
 Back to configuration menu
 Window always on top
 Select language
+HotKey-Recording Method
+Record
+Select
+Save
+Don't save
+Cancel
+You have unsaved changes!
+Page is not filled completely!
+Name of the key is not defined!
+Okay
+The XDeck is not connected!
+Changes won't be saved.
+Back
+Settings are applied!
+Stay
+Leave
+XDeck-App crashed
+Upon an unknown error, the XDeck app crashed. The problem is being solved at the time.
+First, connect your XDeck.

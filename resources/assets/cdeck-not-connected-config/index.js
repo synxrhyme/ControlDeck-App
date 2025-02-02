@@ -15,10 +15,10 @@ const text_span     = document.getElementById("text-span");
 const accept_span   = document.getElementById("ok-span");
 const redirect_span = document.getElementById("redirect-span");
 
-headline.innerHTML      = lang[177];
-text_span.innerHTML     = lang[39];
-redirect_span.innerHTML = lang[44];
+headline.innerHTML      = lang[39];
+text_span.innerHTML     = lang[47];
 accept_span.innerHTML   = lang[43];
+redirect_span.innerHTML = lang[5];
 
-document.getElementById("ok").addEventListener("click",       () => { ipcRenderer.send("toMain_errorbox-close")    });
-document.getElementById("redirect").addEventListener("click", () => { ipcRenderer.send("toMain_errorbox-redirect") });
+document.getElementById("ok").addEventListener("click",       () => { ipcRenderer.send("toMain_errorbox-cfgsite-close")    });
+document.getElementById("redirect").addEventListener("click", () => { ipcRenderer.send("toMain_errorbox-cfgsite-redirect") });

@@ -7,7 +7,8 @@ module.exports = {
     asar: true,
     icon: path.join(__dirname, 'icon'),
     "extraResource": [
-      "./resources/assets"
+      "./resources/assets",
+      "./build"
     ]
   },
   rebuildConfig: {},

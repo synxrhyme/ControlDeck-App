@@ -1,30 +1,30 @@
-const fs = require("fs")
-const { ipcRenderer } = require('electron')
-const path = require("path")
+const { ipcRenderer } = require('electron');
+const fs              = require("fs");
+const path            = require("path");
 
-const ipc = ipcRenderer
-const assets_path = path.join(path.dirname(__dirname), "resources", "assets")
-const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
+const assets_path = path.join(path.dirname(__dirname), "resources", "assets");
 
-let lang_name = general_config[1]
-let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\r?\n/)
+const main_config_path = path.join(assets_path, "config.json");
+const main_config = JSON.parse(fs.readFileSync(main_config_path, "utf-8"));
 
-let headline = document.getElementById("headline")
+const lang_path = path.join(assets_path, "lang", main_config.lang_name + ".lang");
+const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);
 
-let settings_span = document.getElementById("settings-span")
-let configure_span = document.getElementById("configure-span")
-let copyright_span = document.getElementById("copyright-span")
-let exit_span = document.getElementById("exit-span")
+const headline = document.getElementById("headline");
 
-document.title = lang[0]
-headline.innerHTML = lang[1]
+const settings_span = document.getElementById("settings-span");
+const configure_span = document.getElementById("configure-span");
+const copyright_span = document.getElementById("copyright-span");
+const exit_span = document.getElementById("exit-span");
 
-settings_span.innerHTML = lang[2]
-configure_span.innerHTML = lang[3]
-copyright_span.innerHTML = lang[4]
-exit_span.innerHTML = lang[5]
+document.title = lang[0];
+headline.innerHTML = lang[1];
+
+settings_span.innerHTML = lang[2];
+configure_span.innerHTML = lang[3];
+copyright_span.innerHTML = lang[4];
+exit_span.innerHTML = lang[5];
 
 document.getElementById("exit-btn").addEventListener("click", () => {
-    ipc.send("toMain_manualClose")
-})
+    ipcRenderer.send("toMain_manualClose");
+});

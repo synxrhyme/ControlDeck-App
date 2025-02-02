@@ -1,21 +1,21 @@
-const fs = require("fs")
-const { ipcRenderer } = require("electron")
-const path = require("path")
+const { ipcRenderer } = require("electron");
+const fs              = require("fs");
+const path            = require("path");
 
-const ipc = ipcRenderer
-const general_config = fs.readFileSync(path.join(path.dirname(__dirname), "config.cfg"), "utf-8").split(/\r?\n/)
+const assets_path = path.dirname(__dirname);
 
-let lang_name = general_config[1]
-let lang_str = fs.readFileSync(path.join(path.dirname(__dirname), "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\r?\n/)
+const main_config_path = path.join(assets_path, "config.json");
+const main_config = JSON.parse(fs.readFileSync(main_config_path, "utf-8"));
 
-let headline = document.getElementById("headline-custom")
-let redirect_span = document.getElementById("redirect-span")
-let accept_span = document.getElementById("ok-span")
+const lang_path = path.join(assets_path, "lang", main_config.lang_name + ".lang");
+const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);
 
-headline.innerHTML =  lang[175]
-accept_span.innerHTML = lang[176]
+const headline = document.getElementById("headline-custom");
+const accept_span = document.getElementById("ok-span");
+
+headline.innerHTML =  lang[37];
+accept_span.innerHTML = lang[38];
 
 document.getElementById("ok").addEventListener("click", () => {
-    ipc.send("toMain_errorbox-name-incomplete-close")
+    ipcRenderer.send("toMain_errorbox-close");
 })

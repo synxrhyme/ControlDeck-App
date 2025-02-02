@@ -1,119 +1,68 @@
-const fs = require("fs")
-const { ipcRenderer } = require('electron')
-const path = require("path")
+const { ipcRenderer } = require('electron');
+const fs              = require("fs");
+const path            = require("path");
 
-const ipc = ipcRenderer
-const assets_path = path.join(path.dirname(__dirname), "resources", "assets")
-const general_config = fs.readFileSync(path.join(assets_path, "config.cfg"), "utf-8").split(/\r?\n/)
+const ipc = ipcRenderer;
 
-let lang_name = general_config[1]
-let lang_str = fs.readFileSync(path.join(assets_path, "lang", lang_name + ".lang"), "utf-8")
-const lang = lang_str.split(/\r?\n/)
+const assets_path = path.join(path.dirname(__dirname), "resources", "assets");
 
-let headline = document.getElementById("headline")
+const main_config_path = path.join(assets_path, "config.cfg");
+const main_config = fs.readFileSync(main_config_path, "utf-8");
 
-let AoT_checkbox = document.getElementById("checkbox-always-on-top")
-let AoT_checkbox_span = document.getElementById("toggle-span")
-let lang_select_span = document.getElementById("lang-select-span")
-let record_select_span = document.getElementById("record-select-span")
+const lang_path = path.join(assets_path, "lang", main_config.lang_name + ".lang");
+const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);
 
-let record_select = document.getElementById("record-select")
-let back_span = document.getElementById("back-span")
+const headline = document.getElementById("headline");
 
-document.getElementById("back-button").addEventListener("click", () => {
-    window.location.href = "../main-menu/index.html"
-})
+const always_on_top_checkbox = document.getElementById("checkbox-always-on-top");
+const always_on_top_checkbox_span = document.getElementById("toggle-span");
 
-let lang_select = document.getElementById("lang-select")
-lang_select.addEventListener("change", () => {
-    selected_lang_name = lang_select.value
+const lang_select = document.getElementById("lang-select");
+const lang_select_span = document.getElementById("lang-select-span");
 
-    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+const back_span = document.getElementById("back-span");
 
-    if (temp_general_config[1] != selected_lang_name) {
-        temp_general_config[1] = selected_lang_name
+document.title = lang[0];
+headline.innerHTML = lang[2];
+always_on_top_checkbox_span.innerHTML = lang[27];
+lang_select_span.innerHTML = lang[28];
 
-        fs.writeFileSync("./resources/app/assets/config.cfg", "")
-
-        for (let i = 0; i < temp_general_config.length; i++) {
-            if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
-            }
-            else {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
-            }
-        }
-
-        window.location.href = "./index.html"
-    }
-})
-
-record_select.addEventListener("change", () => {
-    let record_select_val = record_select.value
-
-    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
-
-    if (temp_general_config[3] != record_select_val) {
-        temp_general_config[3] = record_select_val
-
-        fs.writeFileSync("./resources/app/assets/config.cfg", "")
-
-        for (let i = 0; i < temp_general_config.length; i++) {
-            if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
-            }
-            else {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
-            }
-        }
-    }
-})
-
-document.title = lang[0]
-headline.innerHTML = lang[2]
-AoT_checkbox_span.innerHTML = lang[27]
-lang_select_span.innerHTML = lang[28]
-record_select_span.innerHTML = lang[29]
-
-record_select.options[0].innerHTML = lang[30];
-record_select.options[1].innerHTML = lang[31];
-
-back_span.innerHTML = lang[6]
+back_span.innerHTML = lang[6];
 
 document.getElementById("checkbox-always-on-top").addEventListener("click", () => {
-    ipc.invoke("alwaysOnTop")
+    ipcRenderer.send("alwaysOnTop");
 
-    let temp_general_config = fs.readFileSync("./resources/app/assets/config.cfg", "utf-8").split(/\r?\n/)
+    if (main_config.always_on_top != always_on_top_checkbox.checked) {
+        main_config.always_on_top = always_on_top_checkbox.checked;
 
-    if (temp_general_config[2] != "ontop=" + AoT_checkbox.checked.toString()) {
-        temp_general_config[2] = "ontop=" + AoT_checkbox.checked.toString()
-
-        fs.writeFileSync("./resources/app/assets/config.cfg", "")
-
-        for (let i = 0; i < temp_general_config.length; i++) {
-            if (i != temp_general_config.length - 1) {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i] + "\n")
-            }
-            else {
-                fs.appendFileSync("./resources/app/assets/config.cfg", temp_general_config[i])
-            }
-        }
+        fs.writeFileSync(path.join(assets_path, "config.json"), main_config);
     }
-})
+});
+
+lang_select.addEventListener("change", () => {
+    let selected_lang_name = lang_select.value;
+
+    if (main_config.lang_name != selected_lang_name) {
+        main_config.lang_name = selected_lang_name;
+
+        fs.writeFileSync(main_config_path, main_config);
+        window.location.href = "./index.html";
+    }
+});
+
+document.getElementById("back-button").addEventListener("click", () => {
+    window.location.href = "../main-menu/index.html";
+});
 
 function updateElements() {
-    record_select.value = general_config[3]
-
-    if (general_config[2] == "ontop=true") {
-        AoT_checkbox.checked = true
+    if (main_config.always_on_top) {
+        always_on_top_checkbox.checked = true;
     }
     else {
-        AoT_checkbox.checked = false
+        always_on_top_checkbox.checked = false;
     }
 
-    temp1 = general_config[1].split("/")
-    temp2 = temp1[3].split(".")
-    lang_select.value = temp2[0]
+    lang_select.value = main_config.lang_name;
 }
 
-window.onload = updateElements()
+window.onload = updateElements();
