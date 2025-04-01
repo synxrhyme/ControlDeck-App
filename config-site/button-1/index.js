@@ -18,7 +18,7 @@ const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);
 const keys_lang_path = path.join(assets_path, "lang", main_config.lang_name + "_keys.lang");
 const keys_lang = fs.readFileSync(keys_lang_path, "utf-8").split(/\r?\n/);
 
-const serialNumber = "7&862CE5D&0&0000";
+const serialNumber = main_config.serialNumber;
 
 let serialPort;
 let port_id = main_config.port_id;
@@ -332,7 +332,7 @@ function apply() {
     }
 }
 
-function connectCDeck() {
+function connectXDeck() {
     serialPort = new SerialPort({
         path: port_id,
         baudRate: 115200
@@ -390,12 +390,12 @@ function connectCDeck() {
                     selects_keys[i].value = hotkeyDisplay[i];
                 }
     
-                fs.writeFileSync(btn_cfg_path, JSON.stringify(data.btn1));
+                fs.writeFileSync(btn_cfg_path, JSON.stringify(data.btn1, null, 2));
             } catch (error) {
-                console.log("error: " + error)
-                console.log("data: " + raw_data_single)
-                console.log("data_buffer: " + raw_data_buffer)
-                console.log("raw_data_buffer: " + JSON.stringify(raw_data_buffer))
+                console.log("error: " + error);
+                console.log("data: " + raw_data_single);
+                console.log("data_buffer: " + raw_data_buffer);
+                console.log("raw_data_buffer: " + JSON.stringify(raw_data_buffer));
             }
 
             raw_data_single = "";
@@ -446,10 +446,10 @@ async function check_ports() {
     
                 if (main_config.port_id != port_id) {
                     main_config.port_id = port_id;
-                    fs.writeFileSync(path.join(assets_path, "config.json"), JSON.stringify(main_config));
+                    fs.writeFileSync(path.join(assets_path, "config.json"), JSON.stringify(main_config, null, 2));
                 }
     
-                connectCDeck();
+                connectXDeck();
             }
         });
     });

@@ -46,3 +46,15 @@ Leave
 XDeck-App crashed
 Upon an unknown error, the XDeck app crashed. The problem is being solved at the time.
 First, connect your XDeck.
+XDeck-Updater
+XDeck-Software-Version:
+Unknown
+Check for updates
+The XDeck is updating
+Please do not disturb the installation by closing the program, removing the XDeck or cutting internet access. There are no safety mechanisms in case you do so!
+Newest Firmware Version:
+Checking
+Connection status:
+Waiting for connection...
+Connected to server
+Error connecting to server

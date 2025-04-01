@@ -6,8 +6,8 @@ const ipc = ipcRenderer;
 
 const assets_path = path.join(path.dirname(__dirname), "resources", "assets");
 
-const main_config_path = path.join(assets_path, "config.cfg");
-const main_config = fs.readFileSync(main_config_path, "utf-8");
+const main_config_path = path.join(assets_path, "config.json");
+const main_config = JSON.parse(fs.readFileSync(main_config_path, "utf-8"));
 
 const lang_path = path.join(assets_path, "lang", main_config.lang_name + ".lang");
 const lang = fs.readFileSync(lang_path, "utf-8").split(/\r?\n/);

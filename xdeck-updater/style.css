@@ -1,0 +1,48 @@
+.back-btn {
+    margin-top: 50px;
+}
+
+.current-version-div, .newest-version-div, .pre-connection-status, .connection-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.current-version-div *, .newest-version-div *, .pre-connection-status *, .connection-status * {
+    margin: 5px;
+}
+
+#version, #newest-version {
+    margin-left: 2px;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+    margin-top: 15px;
+
+    width: 40%;
+
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+    border: var(--menu_border);
+    border-radius: 20px;
+
+    background-color: var(--menu_bg);
+}
+
+.btn {
+    margin-top: 50px;
+    transition: 0.05s;
+}
+
+.btn:active {
+    transition: 0.05s;
+    opacity: 0.8;
+    border: 2px solid rgba(76, 149, 63, 0.5);
+    box-shadow: 0 0 10px 0 rgba(170, 255, 133, 0.25);
+}

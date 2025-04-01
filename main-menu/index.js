@@ -15,6 +15,7 @@ const headline = document.getElementById("headline");
 const settings_span = document.getElementById("settings-span");
 const configure_span = document.getElementById("configure-span");
 const copyright_span = document.getElementById("copyright-span");
+const updater_span = document.getElementById("updater-span");
 const exit_span = document.getElementById("exit-span");
 
 document.title = lang[0];
@@ -23,6 +24,7 @@ headline.innerHTML = lang[1];
 settings_span.innerHTML = lang[2];
 configure_span.innerHTML = lang[3];
 copyright_span.innerHTML = lang[4];
+updater_span.innerHTML = lang[48];
 exit_span.innerHTML = lang[5];
 
 document.getElementById("exit-btn").addEventListener("click", () => {

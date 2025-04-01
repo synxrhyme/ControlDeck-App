@@ -44,7 +44,7 @@ let btn6_cfg = JSON.parse(btn6_cfg_raw);
 let btn7_cfg = JSON.parse(btn7_cfg_raw);
 let btn8_cfg = JSON.parse(btn8_cfg_raw);
 
-const serialNumber = "7&862CE5D&0&0000";
+const serialNumber = main_config.serialNumber;
 
 let serialPort;
 let port_id = main_config.port_id;
@@ -242,8 +242,6 @@ document.getElementById("back-button").addEventListener("click", returnToMainMen
 for (let i = 0; i < edit_spans.length; i++) {
     edit_spans[i].innerHTML = lang[8];
 }
-
-document
 
 let currently_connected = false;
 let first_time_error = true;
@@ -538,18 +536,18 @@ function load_values() {
     }
 }
 
-function connectCDeck() {
+function connectXDeck() {
     serialPort = new SerialPort({
         path: port_id,
         baudRate: 115200
-    })
+    });
 
     serialPort.on('open', (event) => {
         setStatusConnected();
 
         currently_connected = true
         first_time_error = true
-    })
+    });
 
     serialPort.on('data', (event) => {
         let raw_data = Buffer.from(event).toString();
@@ -617,12 +615,12 @@ function connectCDeck() {
         
             raw_data_buffer = ""
         }
-    })
+    });
 
     serialPort.on('close', (event) => {
         setStatusNotConnected();
         currently_connected = false;
-    })
+    });
 
     serialPort.on('error', function (error) {
         let error_split = error.toString().split(":");
@@ -632,7 +630,7 @@ function connectCDeck() {
             setStatusError();
             first_time_error = false;
         }
-    })
+    });
 }
 
 function setStatusConnected() {
@@ -664,7 +662,7 @@ async function check_ports() {
                     fs.writeFileSync(path.join(assets_path, "config.json"), JSON.stringify(main_config));
                 }
     
-                connectCDeck();
+                connectXDeck();
             }
         });
     });
@@ -675,7 +673,7 @@ function returnToMainMenu() {
         serialPort.close();
     }
 
-    window.location.href = "../index.html";
+    window.location.href = "../main-menu/index.html";
 }
 
 function main() {

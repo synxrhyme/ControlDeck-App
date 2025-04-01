@@ -28,6 +28,8 @@ let name_incomplete = false;
 let unsaved_changes = false;
 let currently_connected = false;
 
+let firmware_version;
+
 function createWindow() {
     const win = new BrowserWindow({
         show: false,
@@ -68,29 +70,43 @@ function createWindow() {
             }
         });
 
-        dialogWindow.loadFile(path.join(assets_path, "dialog-window", "index.html"));
-        
-        if (type == "close") {
-            setTimeout(() => {
-                dialogWindow.webContents.send("toDialog_close-type");
-            }, 100);
+        if (type == "updating-xdeck") {
+            dialogWindow.loadFile(path.join(assets_path, "updating-xdeck", "index.html"));
+
+            dialogWindow.on("close", (event) => {
+                event.preventDefault();
+            });
+
+            dialogWindow.webContents.on("toMain_close-updater", () => {
+                dialogWindow.destroy();
+            });
         }
-        else if (type == "redirect") {
-            setTimeout(() => {
-                dialogWindow.webContents.send("toDialog_redirect-type");
-            }, 100);
-        }
-        else if (type == "redirect_nameIncomplete") {
-            setTimeout(() => {
-                dialogWindow.webContents.send("toDialog_redirect-type-nameIncomplete");
-            }, 100);
+        else {
+            dialogWindow.loadFile(path.join(assets_path, "dialog-window", "index.html"));
+            
+            if (type == "close") {
+                setTimeout(() => {
+                    dialogWindow.webContents.send("toDialog_close-type");
+                }, 100);
+            }
+            else if (type == "redirect") {
+                setTimeout(() => {
+                    dialogWindow.webContents.send("toDialog_redirect-type");
+                }, 100);
+            }
+            else if (type == "redirect_nameIncomplete") {
+                setTimeout(() => {
+                    dialogWindow.webContents.send("toDialog_redirect-type-nameIncomplete");
+                }, 100);
+            }
+
+            dialogWindow.on("close", (event) => {
+                event.preventDefault();
+                dialogWindow.destroy();
+            });
         }
 
         dialogWindow.once('ready-to-show', () => { dialogWindow.show(); });
-        dialogWindow.on("close", (event) => {
-            event.preventDefault();
-            dialogWindow.destroy();
-        })
     }
 
     function createErrorBox(type) {
@@ -157,17 +173,21 @@ function createWindow() {
         app.exit(0);
     })
 
-    ipcMain.on("toMain_connected",                       () => { currently_connected = true;                    });
-    ipcMain.on("toMain_disconnected",                    () => { currently_connected = false;                   });
-    ipcMain.on("toMain_unsavedValues",                   () => { unsaved_changes = true;                        });
-    ipcMain.on("toMain_savedValues",                     () => { unsaved_changes = false;                       });
-    ipcMain.on("toMain_nameIncompleteVal",               () => { name_incomplete = true;                        });
-    ipcMain.on("toMain_nameCompleteVal",                 () => { name_incomplete = false;                       });
-    ipcMain.on("toMain_askForExit",                      () => { createCustomDialog("redirect");                });
-    ipcMain.on("toMain_askForExit_nameIncomplete",       () => { createCustomDialog("redirect-nameIncomplete"); });
-    ipcMain.on("toMain_nameIncomplete",                  () => { createErrorBox("name-incomplete");             });
-    ipcMain.on("toMain_controldeckNotConnected",         () => { createErrorBox("cdeck-not-connected");         });
-    ipcMain.on("toMain_controldeckNotConnected_cfgSite", () => { createErrorBox("cdeck-not-connected-config");  });
+    ipcMain.on("toMain_connected",                       () => { currently_connected = true;                     });
+    ipcMain.on("toMain_disconnected",                    () => { currently_connected = false;                    });
+    ipcMain.on("toMain_unsavedValues",                   () => { unsaved_changes = true;                         });
+    ipcMain.on("toMain_savedValues",                     () => { unsaved_changes = false;                        });
+    ipcMain.on("toMain_nameIncompleteVal",               () => { name_incomplete = true;                         });
+    ipcMain.on("toMain_nameCompleteVal",                 () => { name_incomplete = false;                        });
+    ipcMain.on("toMain_askForExit",                      () => { createCustomDialog("redirect");                 });
+    ipcMain.on("toMain_askForExit_nameIncomplete",       () => { createCustomDialog("redirect-nameIncomplete");  });
+    ipcMain.on("toMain_dialog-updating-xdeck",           () => { createCustomDialog("updating-xdeck");           });
+    ipcMain.on("toMain_nameIncomplete",                  () => { createErrorBox("name-incomplete");              });
+    ipcMain.on("toMain_controldeckNotConnected",         () => { createErrorBox("xdeck-not-connected");          });
+    ipcMain.on("toMain_controldeckNotConnected_cfgSite", () => { createErrorBox("xdeck-not-connected-config");   });
+
+    ipcMain.on("toMain_dialog-get-last-xdeck-version",   ()            => { win.webContents.send("toRenderer_xdeck-firmware-version", { data: firmware_version }); });
+    ipcMain.on("toMain_dialog-set-last-xdeck-version",   (event, args) => { firmware_version = args.data; });
 
 
     win.on('close', (event) => {
